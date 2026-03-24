@@ -41,7 +41,6 @@
         .ops-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
         .ops-card.warning { border-color: rgba(239, 68, 68, 0.5); background: linear-gradient(145deg, rgba(40, 20, 20, 1), rgba(50, 20, 20, 0.8)); }
         
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #1a1a2e; }
         ::-webkit-scrollbar-thumb { background: #e94560; border-radius: 4px; }
@@ -111,11 +110,10 @@
                 </div>
             </section>
 
-            <!-- OPERASIONAL (EXPANDED CARDS + AI) -->
+            <!-- OPERASIONAL -->
             <section id="operasional" class="page-section">
                 <h3 class="font-bold text-lg mb-4 text-blue-400"><i class="fas fa-industry mr-2"></i>Data Operasional</h3>
                 
-                <!-- Grid Kartu Angka -->
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
                     <!-- Baris 1 -->
                     <div class="ops-card p-4 rounded-xl" id="card-tebu">
@@ -169,7 +167,7 @@
                 </div>
             </section>
 
-            <!-- PERSIAPAN (MAINTENANCE & PROC) -->
+            <!-- PERSIAPAN -->
             <section id="persiapan" class="page-section">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="glass-dark p-6 rounded-xl border-t-4 border-neon-green">
@@ -182,7 +180,6 @@
                     </div>
                 </div>
                 
-                <!-- AI Maintenance Analysis -->
                 <div class="glass-dark p-6 rounded-xl border-t-4 border-green-500 mt-6">
                     <div class="flex items-center gap-2 mb-3"><i class="fas fa-hard-hat text-green-400"></i><h3 class="font-bold text-white">Analisis Keterlambatan Maintenance</h3></div>
                     <div id="aiMaintenanceContent" class="text-sm"></div>
@@ -207,16 +204,20 @@
                 <div class="glass-dark p-6 rounded-xl">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="font-bold text-lg">Pengaturan Admin</h3>
-                        <span class="text-xs text-green-400"><i class="fas fa-lock mr-1"></i> Protected</span>
+                        <span class="text-xs text-green-400"><i class="fas fa-lock mr-1"></i> Protected Area</span>
                     </div>
                     <label class="block text-gray-400 text-sm mb-2">URL Google Sheet (CSV Published)</label>
                     <input type="text" id="inputSheetUrl" class="w-full bg-sugar-dark border border-gray-700 rounded-lg p-3 text-white mb-4 text-xs" placeholder="Paste Link CSV Disini">
                     <button onclick="loadSheetData()" class="bg-sugar-accent hover:bg-pink-600 px-6 py-2 rounded-lg font-semibold transition">Simpan & Ambil Data</button>
                     
+                    <!-- PANDUAN FORMAT SHEET YANG DITAMBAHKAN KEMBALI -->
                     <div class="mt-6 text-xs text-gray-500 bg-sugar-dark p-4 rounded border border-gray-800">
-                        <p><strong>Panduan Format Sheet:</strong></p>
-                        <p>Kolom: Kategori, Nama Item, Target, Realisasi, Satuan</p>
-                        <p>Item Ops: Tebu Giling, Hasil Gula, Rendemen, Tetes, KIS/KES, Jamti A/B, OR, Total Losses.</p>
+                        <p class="font-bold text-white mb-2"><i class="fas fa-info-circle mr-1"></i>Panduan Format Google Sheet:</p>
+                        <p>1. Pastikan Baris Pertama (Header) memiliki kolom: <strong class="text-yellow-400">Kategori, Nama Item, Target, Realisasi, Satuan</strong>.</p>
+                        <p>2. Isi Kolom <strong>Kategori</strong> dengan: <span class="text-blue-400">Operasional</span>, <span class="text-green-400">Maintenance</span>, <span class="text-yellow-400">Procurement</span>, <span class="text-red-400">Keuangan</span>.</p>
+                        <p>3. Khusus <strong>Operasional</strong>, Nama Item harus spesifik: Tebu Giling, Hasil Gula, Rendemen, Produksi Tetes, KIS/KES, Jamti A/B, OR, Total Losses.</p>
+                        <p>4. Logika Khusus <strong>Jamti A/B</strong>: Target dianggap Batas Maksimum. Jika Realisasi > Target, akan muncul peringatan merah.</p>
+                        <p>5. Logika <strong>Maintenance</strong>: Akan dihitung selisihnya (Realisasi - Target). Jika negatif, AI akan memberi saran.</p>
                     </div>
                 </div>
             </section>
@@ -239,11 +240,11 @@
             { Kategori: 'Operasional', 'Nama Item': 'Rendemen', Target: 8.0, Realisasi: 7.91, Satuan: '%' },
             { Kategori: 'Operasional', 'Nama Item': 'Produksi Tetes', Target: 500, Realisasi: 400, Satuan: 'Ton' },
             { Kategori: 'Operasional', 'Nama Item': 'KIS/KES', Target: 100, Realisasi: 80, Satuan: '%' },
-            { Kategori: 'Operasional', 'Nama Item': 'Jamti A/B', Target: 5.0, Realisasi: 6.5, Satuan: '%' }, // Ini akan warning (Lebih dari target)
+            { Kategori: 'Operasional', 'Nama Item': 'Jamti A/B', Target: 5.0, Realisasi: 6.5, Satuan: '%' },
             { Kategori: 'Operasional', 'Nama Item': 'OR', Target: 95, Realisasi: 92, Satuan: '%' },
             { Kategori: 'Operasional', 'Nama Item': 'Total Losses', Target: 3.0, Realisasi: 2.5, Satuan: '%' },
-            { Kategori: 'Maintenance', 'Nama Item': 'Overhaul Mesin', Target: 100, Realisasi: 85, Satuan: '%' },
-            { Kategori: 'Maintenance', 'Nama Item': 'Boiler Repair', Target: 100, Realisasi: 40, Satuan: '%' }, // Negatif
+            { Kategori: 'Maintenance', 'Nama Item': 'Overhaul Mesin', Target: 100, Realisasi: 98.55, Satuan: '%' },
+            { Kategori: 'Maintenance', 'Nama Item': 'Boiler Repair', Target: 100, Realisasi: 85.25, Satuan: '%' },
             { Kategori: 'Procurement', 'Nama Item': 'Sparepart', Target: 100, Realisasi: 20, Satuan: '%' },
             { Kategori: 'Keuangan', 'Nama Item': 'Gaji', Target: 2000000000, Realisasi: 1800000000, Satuan: 'Rp' }
         ];
@@ -364,7 +365,7 @@
                 { key: 'rendemen', name: 'Rendemen', color: 'yellow' },
                 { key: 'tetes', name: 'Produksi Tetes', color: 'purple' },
                 { key: 'kis', name: 'KIS/KES', color: 'cyan' },
-                { key: 'jamti', name: 'Jamti A/B', color: 'red', logic: 'max' }, // Logic Max
+                { key: 'jamti', name: 'Jamti A/B', color: 'red', logic: 'max' },
                 { key: 'or', name: 'OR', color: 'orange' },
                 { key: 'losses', name: 'Total Losses', color: 'gray' }
             ];
@@ -389,9 +390,7 @@
                     let pct = (t > 0) ? Math.round((r/t)*100) : 0;
                     let isBad = false;
 
-                    // Logic Check
                     if (item.logic === 'max') {
-                        // Jika Jamti, batas maksimum. Jika r > t -> Bad
                         elPct.innerText = pct + "%";
                         if (r > t) {
                             isBad = true;
@@ -405,11 +404,10 @@
                             elPct.className = "font-bold text-green-400";
                         }
                     } else {
-                        // Logic Normal (Min Target)
                         elPct.innerText = pct + "%";
                         if (pct < 100) {
                             elPct.className = "font-bold text-yellow-400";
-                            if (pct < 90) { // Warning jika kurang dari 90%
+                            if (pct < 90) {
                                 isBad = true;
                                 elCard.classList.add('warning');
                                 aiHtml += `<div class='p-2 bg-yellow-900/30 rounded border-l-2 border-yellow-500 mb-2'>
@@ -422,7 +420,6 @@
                         }
                     }
                     
-                    // Reset class jika tidak bad
                     if(!isBad) elCard.classList.remove('warning');
                 }
             });
@@ -431,7 +428,7 @@
         }
 
         // ==========================================
-        // RENDER MAINTENANCE (Selisih)
+        // RENDER MAINTENANCE DETAIL (FIXED DECIMAL)
         // ==========================================
         function renderMaintenanceDetail(data) {
             const c = document.getElementById('listMaintenance');
@@ -440,12 +437,17 @@
             c.innerHTML = data.map(item => {
                 const t = parseNum(getTarget(item));
                 const r = parseNum(getRealisasi(item));
+                
+                // PERBAIKAN: Simpan selisih dalam variabel
                 const selisih = r - t;
+                // PERBAIKAN: Format 2 desimal menggunakan toFixed(2)
+                const selisihDisplay = selisih.toFixed(2);
+
                 const nama = getNama(item);
 
                 if (selisih < 0) {
                     aiHtml += `<div class='mt-2 text-xs text-red-400 bg-sugar-dark p-2 rounded'>
-                        <i class="fas fa-exclamation-triangle mr-1"></i> <strong>${nama}</strong> tertunda ${Math.abs(selisih)}%. 
+                        <i class="fas fa-exclamation-triangle mr-1"></i> <strong>${nama}</strong> tertunda ${Math.abs(selisih).toFixed(2)}%. 
                         <br>Saran: Evaluasi hambatan lapangan dan pertimbangkan lembur/penambahan tenaga.
                     </div>`;
                 }
@@ -454,9 +456,9 @@
                     <div class="bg-sugar-dark p-3 rounded-lg border-l-2 ${selisih < 0 ? 'border-red-500' : 'border-green-500'}">
                         <div class="flex justify-between text-xs mb-1">
                             <span class="font-semibold">${nama}</span>
-                            <span class="${selisih < 0 ? 'text-red-400' : 'text-green-400'}">${selisih > 0 ? '+' : ''}${selisih}%</span>
+                            <span class="${selisih < 0 ? 'text-red-400' : 'text-green-400'}">${selisih > 0 ? '+' : ''}${selisihDisplay}%</span>
                         </div>
-                        <div class="text-gray-500 text-[10px]">Target: ${t}% | Realisasi: ${r}%</div>
+                        <div class="text-gray-500 text-[10px]">Target: ${t.toFixed(2)}% | Realisasi: ${r.toFixed(2)}%</div>
                     </div>
                 `;
             }).join('');
@@ -508,7 +510,6 @@
         // ==========================================
         function runAIAnalysis() {
             const container = document.getElementById('aiHomeContent');
-            // Logika singkat untuk home
             let issues = [];
             rawData.forEach(item => {
                 const cat = clean(getKategori(item));
