@@ -9,14 +9,10 @@
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; }
         .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
-        .ai-typing { animation: blink 1s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .progress-bar { transition: width 1s ease-in-out; }
     </style>
 </head>
 <body class="h-screen flex overflow-hidden">
-
-    <!-- Sidebar -->
     <aside class="w-64 bg-slate-900 text-white flex flex-col p-6 hidden md:flex">
         <div class="flex items-center gap-3 mb-10">
             <i class="fas fa-cube text-2xl text-pink-400"></i>
@@ -27,146 +23,84 @@
                 <li><a href="#" class="flex items-center gap-3 text-white bg-slate-800 p-3 rounded-lg"><i class="fas fa-home"></i> Dashboard</a></li>
                 <li><a href="#" class="flex items-center gap-3 text-slate-400 hover:text-white p-3"><i class="fas fa-tasks"></i> Proyek</a></li>
                 <li><a href="#" class="flex items-center gap-3 text-slate-400 hover:text-white p-3"><i class="fas fa-robot"></i> Analisis AI</a></li>
-                <li><a href="#" class="flex items-center gap-3 text-slate-400 hover:text-white p-3"><i class="fas fa-cog"></i> Pengaturan</a></li>
             </ul>
         </nav>
     </aside>
-
-    <!-- Main Content -->
     <main class="flex-1 overflow-y-auto p-8">
         <header class="flex justify-between items-center mb-8">
             <div>
-                <h2 class="text-2xl font-bold text-slate-800">Selamat Datang, Admin</h2>
-                <p class="text-slate-500">Ringkasan realisasi pekerjaan proyek aktif.</p>
+                <h2 class="text-2xl font-bold text-slate-800">Realisasi Progress Pekerjaan</h2>
+                <p class="text-slate-500">Analisis Otomatis oleh AI</p>
             </div>
-            <div class="flex items-center gap-4">
-                <img src="https://ui-avatars.com/api/?name=Admin&background=ec4899&color=fff" class="w-10 h-10 rounded-full shadow" alt="User">
-            </div>
+            <img src="https://ui-avatars.com/api/?name=Admin&background=ec4899&color=fff" class="w-10 h-10 rounded-full shadow" alt="User">
         </header>
-
-        <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <div class="glass-card p-6 rounded-xl shadow-sm border-l-4 border-pink-500">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-sm text-gray-500">Total Proyek</p>
-                        <h3 class="text-2xl font-bold text-gray-800">12</h3>
-                    </div>
-                    <div class="bg-pink-100 p-3 rounded-full text-pink-500"><i class="fas fa-briefcase"></i></div>
-                </div>
+                <p class="text-sm text-gray-500">Total Proyek</p>
+                <h3 class="text-2xl font-bold text-gray-800">12</h3>
             </div>
             <div class="glass-card p-6 rounded-xl shadow-sm border-l-4 border-green-500">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-sm text-gray-500">Selesai</p>
-                        <h3 class="text-2xl font-bold text-gray-800">8</h3>
-                    </div>
-                    <div class="bg-green-100 p-3 rounded-full text-green-500"><i class="fas fa-check-circle"></i></div>
-                </div>
+                <p class="text-sm text-gray-500">Selesai</p>
+                <h3 class="text-2xl font-bold text-gray-800">8</h3>
             </div>
             <div class="glass-card p-6 rounded-xl shadow-sm border-l-4 border-yellow-500">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-sm text-gray-500">Berjalan</p>
-                        <h3 class="text-2xl font-bold text-gray-800">3</h3>
-                    </div>
-                    <div class="bg-yellow-100 p-3 rounded-full text-yellow-600"><i class="fas fa-spinner"></i></div>
-                </div>
+                <p class="text-sm text-gray-500">Berjalan</p>
+                <h3 class="text-2xl font-bold text-gray-800">3</h3>
             </div>
             <div class="glass-card p-6 rounded-xl shadow-sm border-l-4 border-red-500">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-sm text-gray-500">Terlambat</p>
-                        <h3 class="text-2xl font-bold text-gray-800">1</h3>
-                    </div>
-                    <div class="bg-red-100 p-3 rounded-full text-red-500"><i class="fas fa-exclamation-triangle"></i></div>
-                </div>
+                <p class="text-sm text-gray-500">Terlambat</p>
+                <h3 class="text-2xl font-bold text-gray-800">1</h3>
             </div>
         </div>
-
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- List Progress -->
             <div class="lg:col-span-2 glass-card rounded-xl shadow-sm p-6">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">Realisasi Progress</h3>
-                <div class="space-y-6" id="projectList"></div>
+                <h3 class="text-lg font-bold text-gray-800 mb-4">Progress Saat Ini</h3>
+                <div class="space-y-4" id="projectList"></div>
             </div>
-
-            <!-- AI Analysis -->
             <div class="glass-card rounded-xl shadow-sm p-6 border-t-4 border-indigo-500">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="bg-indigo-100 p-2 rounded-full text-indigo-600"><i class="fas fa-robot"></i></div>
                     <h3 class="text-lg font-bold text-gray-800">Analisis AI</h3>
                 </div>
                 <div id="aiAnalysisContent" class="text-sm text-gray-600 space-y-3">
-                    <p class="text-center text-gray-400 py-10">Memuat analisis AI...</p>
+                    <p class="text-center text-gray-400 py-10">Memuat...</p>
                 </div>
-                <button onclick="runAIAnalysis()" class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg transition flex items-center justify-center gap-2">
-                    <i class="fas fa-sync-alt"></i> Analisis Ulang
+                <button onclick="runAIAnalysis()" class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg transition">
+                    Analisis Ulang
                 </button>
             </div>
         </div>
     </main>
-
     <script>
         const projects = [
-            { id: 1, name: "Redesign Website UI", progress: 90, target: 100, status: "on-track", deadline: "2023-10-10" },
-            { id: 2, name: "Backend API Integration", progress: 45, target: 100, status: "delayed", deadline: "2023-10-05" },
-            { id: 3, name: "Mobile App Development", progress: 75, target: 100, status: "on-track", deadline: "2023-11-20" },
-            { id: 4, name: "Database Migration", progress: 20, target: 60, status: "at-risk", deadline: "2023-10-02" },
-            { id: 5, name: "Security Audit", progress: 100, target: 100, status: "completed", deadline: "2023-09-01" }
+            { name: "Redesign Website UI", progress: 90, status: "on-track" },
+            { name: "Backend API Integration", progress: 45, status: "delayed" },
+            { name: "Mobile App Development", progress: 75, status: "on-track" },
+            { name: "Database Migration", progress: 20, status: "at-risk" }
         ];
-
         function renderProjects() {
-            const container = document.getElementById('projectList');
-            container.innerHTML = '';
-            projects.forEach(project => {
-                let colorClass = 'bg-blue-500';
-                let statusText = 'Normal';
-                if(project.status === 'completed') { colorClass = 'bg-green-500'; statusText = 'Selesai'; }
-                if(project.status === 'delayed') { colorClass = 'bg-red-500'; statusText = 'Terlambat'; }
-                if(project.status === 'at-risk') { colorClass = 'bg-yellow-500'; statusText = 'Risiko Tinggi'; }
-
-                const html = `
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <div class="flex justify-between mb-2">
-                            <h4 class="font-semibold text-gray-700">${project.name}</h4>
-                            <span class="text-xs px-2 py-1 rounded-full ${project.status === 'completed' ? 'bg-green-100 text-green-700' : project.status === 'delayed' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}">${statusText}</span>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-500 mb-1">
-                            <span>Progress: ${project.progress}%</span>
-                            <span>Target: ${project.target}%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div class="progress-bar ${colorClass} h-2.5 rounded-full" style="width: 0%"></div>
-                        </div>
-                    </div>`;
-                container.innerHTML += html;
+            const c = document.getElementById('projectList'); c.innerHTML = '';
+            projects.forEach(p => {
+                let color = 'bg-blue-500';
+                if(p.status === 'delayed') color = 'bg-red-500';
+                if(p.status === 'at-risk') color = 'bg-yellow-500';
+                c.innerHTML += `<div class="bg-gray-50 p-4 rounded-lg">
+                    <div class="flex justify-between mb-2"><h4 class="font-semibold text-gray-700">${p.name}</h4><span class="text-xs px-2 py-1 rounded-full bg-gray-200">${p.progress}%</span></div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5"><div class="progress-bar ${color} h-2.5 rounded-full" style="width: ${p.progress}%"></div></div>
+                </div>`;
             });
-            setTimeout(() => {
-                const bars = document.querySelectorAll('.progress-bar');
-                bars.forEach((bar, index) => { bar.style.width = projects[index].progress + '%'; });
-            }, 100);
         }
-
         function runAIAnalysis() {
-            const container = document.getElementById('aiAnalysisContent');
-            container.innerHTML = `<p class="text-indigo-500 font-semibold">AI Sedang Menganalisis Data... <span class="ai-typing">▌</span></p>`;
+            const c = document.getElementById('aiAnalysisContent');
+            c.innerHTML = `<p class="text-indigo-500 font-semibold">Menganalisis data proyek...</p>`;
             setTimeout(() => {
-                const delayedProjects = projects.filter(p => p.status === 'delayed' || p.status === 'at-risk');
-                const avgProgress = Math.round(projects.reduce((sum, p) => sum + p.progress, 0) / projects.length);
-                let analysisResult = "";
-                let recommendation = "";
-                if (delayedProjects.length > 0) {
-                    analysisResult = `<div class="p-3 bg-red-50 border-l-4 border-red-500 text-red-700 rounded"><strong>Peringatan!</strong><br>Terdeteksi ${delayedProjects.length} proyek mengalami kendala.</div>`;
-                    recommendation = "AI menyarankan untuk segera merealokasi sumber daya ke proyek <strong>" + delayedProjects[0].name + "</strong>.";
-                } else {
-                    analysisResult = `<div class="p-3 bg-green-50 border-l-4 border-green-500 text-green-700 rounded"><strong>Status Baik</strong><br>Semua proyek berjalan sesuai jalur.</div>`;
-                    recommendation = "Pertahankan momentum kerja tim.";
-                }
-                container.innerHTML = `${analysisResult}<div class="mt-4 border-t pt-4"><h4 class="font-bold text-gray-800 mb-2">Insight Utama:</h4><ul class="list-disc list-inside space-y-1 text-gray-600"><li>Rata-rata progress tim: <strong>${avgProgress}%</strong>.</li></ul></div><div class="mt-4 bg-indigo-50 p-3 rounded text-indigo-800 text-xs"><i class="fas fa-lightbulb mr-1"></i> <strong>Saran AI:</strong> ${recommendation}</div>`;
-            }, 1500);
+                const risk = projects.filter(p => p.status === 'delayed' || p.status === 'at-risk');
+                let html = risk.length > 0 
+                    ? `<div class="p-3 bg-red-50 border-l-4 border-red-500 text-red-700 rounded"><strong>Peringatan!</strong><br>Terdeteksi ${risk.length} proyek bermasalah. Saran: Re-alokasi tim ke proyek "${risk[0].name}".</div>`
+                    : `<div class="p-3 bg-green-50 border-l-4 border-green-500 text-green-700 rounded">Semua proyek berjalan lancar.</div>`;
+                c.innerHTML = html;
+            }, 1000);
         }
-
         document.addEventListener('DOMContentLoaded', () => { renderProjects(); runAIAnalysis(); });
     </script>
 </body>
