@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUGARDASH - Regional Sumatera II</title>
+    <title>SUGARDASH - Connected</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    
     <script>
         tailwind.config = {
             theme: {
@@ -25,7 +27,6 @@
         .glass-dark { background: rgba(22, 33, 62, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .nav-item.active { background-color: #e94560; color: white; }
         .progress-bar { transition: width 1.5s ease-in-out; }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); transition: all 0.3s; }
         .page-section { display: none; }
         .page-section.active { display: block; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -33,358 +34,251 @@
 </head>
 <body class="text-gray-100 min-h-screen flex">
 
-    <!-- Sidebar Navigation -->
+    <!-- Sidebar -->
     <aside class="w-64 bg-sugar-dark fixed h-full flex flex-col shadow-xl z-50">
         <div class="p-6 border-b border-gray-700">
             <div class="flex items-center gap-3">
-                <div class="bg-sugar-accent p-2 rounded-lg">
-                    <i class="fas fa-chart-pie text-white text-xl"></i>
-                </div>
+                <div class="bg-sugar-accent p-2 rounded-lg"><i class="fas fa-chart-pie text-white text-xl"></i></div>
                 <div>
                     <h1 class="text-xl font-bold text-white">SUGARDASH</h1>
-                    <p class="text-xs text-gray-400">Regional Sumatera II</p>
+                    <p class="text-xs text-gray-400">Live Data Mode</p>
                 </div>
             </div>
         </div>
-        
         <nav class="flex-1 p-4 space-y-2" id="mainNav">
-            <button onclick="navigateTo('home')" class="nav-item active w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue">
-                <i class="fas fa-home"></i> Dashboard Utama
-            </button>
-            <button onclick="navigateTo('operasional')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue">
-                <i class="fas fa-cogs"></i> Kinerja Operasional
-            </button>
-            <button onclick="navigateTo('persiapan')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue">
-                <i class="fas fa-tools"></i> Persiapan Pabrik
-            </button>
-            <button onclick="navigateTo('keuangan')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue">
-                <i class="fas fa-wallet"></i> Kinerja Keuangan
-            </button>
-            <button onclick="navigateTo('pengaturan')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue">
-                <i class="fas fa-sliders-h"></i> Pengaturan
-            </button>
+            <button onclick="navigateTo('home')" class="nav-item active w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-home"></i> Dashboard Utama</button>
+            <button onclick="navigateTo('operasional')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-cogs"></i> Kinerja Operasional</button>
+            <button onclick="navigateTo('persiapan')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-tools"></i> Persiapan Pabrik</button>
+            <button onclick="navigateTo('keuangan')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-wallet"></i> Kinerja Keuangan</button>
+            <button onclick="navigateTo('pengaturan')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-sliders-h"></i> Pengaturan</button>
         </nav>
-
-        <div class="p-4 border-t border-gray-700 text-xs text-gray-500">
-            PT Sinergi Gula Nusantara &copy; 2024
-        </div>
     </aside>
 
-    <!-- Main Content -->
+    <!-- Main -->
     <main class="flex-1 ml-64 p-8">
-        
-        <!-- HEADER -->
         <header class="flex justify-between items-center mb-8">
             <div>
                 <h2 class="text-2xl font-bold text-white" id="pageTitle">Dashboard Utama</h2>
-                <p class="text-gray-400" id="pageSubtitle">Selamat datang di sistem monitoring giling.</p>
+                <p class="text-gray-400" id="pageSubtitle">Data tersinkronasi otomatis.</p>
             </div>
             <div class="flex items-center gap-4">
-                <button class="bg-sugar-card p-2 rounded-lg text-gray-400 hover:text-white">
-                    <i class="fas fa-bell"></i>
-                </button>
-                <img src="https://ui-avatars.com/api/?name=Admin+SGN&background=e94560&color=fff" class="w-10 h-10 rounded-full">
+                <span id="syncStatus" class="text-xs text-gray-500 bg-sugar-card px-3 py-1 rounded-full"><i class="fas fa-wifi mr-1"></i> Checking...</span>
             </div>
         </header>
 
-        <!-- KONTEN DINAMIS -->
         <div id="contentArea">
             
-            <!-- 1. HOME SECTION -->
+            <!-- HOME -->
             <section id="home" class="page-section active">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Card Kinerja Operasional -->
-                    <div onclick="navigateTo('operasional')" class="card-hover glass-dark p-6 rounded-xl cursor-pointer border-l-4 border-blue-500">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="bg-blue-500/20 p-3 rounded-full text-blue-400">
-                                <i class="fas fa-industry text-2xl"></i>
-                            </div>
-                            <h3 class="font-bold text-lg">Kinerja Operasional</h3>
-                        </div>
-                        <p class="text-sm text-gray-400 mb-4">Monitoring angka giling, bahan baku tebu, dan proyeksi giling.</p>
-                        <div class="flex justify-between text-xs text-gray-500">
-                            <span>Update: Hari ini</span>
-                            <span class="text-blue-400">Lihat Detail <i class="fas fa-arrow-right ml-1"></i></span>
-                        </div>
+                    <div onclick="navigateTo('operasional')" class="glass-dark p-6 rounded-xl cursor-pointer border-l-4 border-blue-500 hover:bg-sugar-card transition">
+                        <div class="flex items-center gap-4 mb-2"><i class="fas fa-industry text-2xl text-blue-400"></i><h3 class="font-bold text-lg">Kinerja Operasional</h3></div>
+                        <p class="text-xs text-gray-400">Monitoring angka giling & tebu.</p>
                     </div>
-
-                    <!-- Card Persiapan Pabrik -->
-                    <div onclick="navigateTo('persiapan')" class="card-hover glass-dark p-6 rounded-xl cursor-pointer border-l-4 border-green-500">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="bg-green-500/20 p-3 rounded-full text-green-400">
-                                <i class="fas fa-tools text-2xl"></i>
-                            </div>
-                            <h3 class="font-bold text-lg">Persiapan Pabrik</h3>
-                        </div>
-                        <p class="text-sm text-gray-400 mb-4">Progress maintenance dan procurement peralatan pabrik.</p>
-                        <div class="flex justify-between text-xs text-gray-500">
-                            <span>Progress: 78%</span>
-                            <span class="text-green-400">Lihat Detail <i class="fas fa-arrow-right ml-1"></i></span>
-                        </div>
+                    <div onclick="navigateTo('persiapan')" class="glass-dark p-6 rounded-xl cursor-pointer border-l-4 border-green-500 hover:bg-sugar-card transition">
+                        <div class="flex items-center gap-4 mb-2"><i class="fas fa-tools text-2xl text-green-400"></i><h3 class="font-bold text-lg">Persiapan Pabrik</h3></div>
+                        <p class="text-xs text-gray-400">Status maintenance & procurement.</p>
                     </div>
-
-                    <!-- Card Kinerja Keuangan -->
-                    <div onclick="navigateTo('keuangan')" class="card-hover glass-dark p-6 rounded-xl cursor-pointer border-l-4 border-yellow-500">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="bg-yellow-500/20 p-3 rounded-full text-yellow-400">
-                                <i class="fas fa-chart-line text-2xl"></i></i>
-                            </div>
-                            <h3 class="font-bold text-lg">Kinerja Keuangan</h3>
-                        </div>
-                        <p class="text-sm text-gray-400 mb-4">Analisis profitabilitas, biaya produksi, dan revenue.</p>
-                        <div class="flex justify-between text-xs text-gray-500">
-                            <span>Status: Stabil</span>
-                            <span class="text-yellow-400">Lihat Detail <i class="fas fa-arrow-right ml-1"></i></span>
-                        </div>
+                    <div onclick="navigateTo('keuangan')" class="glass-dark p-6 rounded-xl cursor-pointer border-l-4 border-yellow-500 hover:bg-sugar-card transition">
+                        <div class="flex items-center gap-4 mb-2"><i class="fas fa-wallet text-2xl text-yellow-400"></i><h3 class="font-bold text-lg">Kinerja Keuangan</h3></div>
+                        <p class="text-xs text-gray-400">Analisis anggaran & realisasi.</p>
                     </div>
                 </div>
 
-                <!-- Analisis AI di Home -->
                 <div class="mt-8 glass-dark p-6 rounded-xl border-t-4 border-purple-500">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-robot text-purple-400"></i>
-                            <h3 class="font-bold text-white">Insight AI (Artificial Intelligence)</h3>
-                        </div>
-                        <button onclick="runAIAnalysis()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-xs">Analisis Ulang</button>
+                        <div class="flex items-center gap-2"><i class="fas fa-robot text-purple-400"></i><h3 class="font-bold text-white">AI Analysis Engine</h3></div>
+                        <button onclick="runAIAnalysis()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-xs"><i class="fas fa-sync-alt mr-1"></i> Analisis Ulang</button>
                     </div>
-                    <div id="aiHomeContent" class="text-sm text-gray-300 min-h-[100px]">
-                        <p class="text-gray-400 italic">Memuat analisis cerdas berdasarkan data operasional...</p>
-                    </div>
+                    <div id="aiHomeContent" class="text-sm text-gray-300 min-h-[100px]"><p class="text-gray-400 italic">Menunggu data dari Google Sheet...</p></div>
                 </div>
             </section>
 
-            <!-- 2. OPERASIONAL SECTION -->
+            <!-- OPERASIONAL -->
             <section id="operasional" class="page-section">
-                <div class="glass-dark p-6 rounded-xl mb-6">
-                    <h3 class="font-bold text-lg mb-4"><i class="fas fa-industry mr-2 text-blue-400"></i>Data Giling Hari Ini</h3>
-                    <div class="grid grid-cols-3 gap-4 text-center">
-                        <div class="bg-sugar-blue p-4 rounded-lg">
-                            <p class="text-gray-400 text-xs">Tebu Giling (Ton)</p>
-                            <h2 class="text-2xl font-bold text-blue-400" id="dataTebu">12,450</h2>
-                        </div>
-                        <div class="bg-sugar-blue p-4 rounded-lg">
-                            <p class="text-gray-400 text-xs">Hasil Gula (Ton)</p>
-                            <h2 class="text-2xl font-bold text-green-400" id="dataGula">985</h2>
-                        </div>
-                        <div class="bg-sugar-blue p-4 rounded-lg">
-                            <p class="text-gray-400 text-xs">Rendemen (%)</p>
-                            <h2 class="text-2xl font-bold text-yellow-400" id="dataRendemen">7.91%</h2>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="glass-dark p-6 rounded-xl">
-                    <h3 class="font-bold text-lg mb-4">Grafik Proyeksi Giling</h3>
-                    <p class="text-gray-400 text-sm">Grafik perbandingan target vs realisasi akan ditampilkan di sini. (Data diambil dari Google Sheet)</p>
-                    <div class="h-64 flex items-center justify-center border border-dashed border-gray-700 rounded-lg mt-4">
-                        <span class="text-gray-600">Area Chart (Chart.js atau Google Charts)</span>
+                    <h3 class="font-bold text-lg mb-4">Data Operasional</h3>
+                    <p class="text-gray-400 text-sm">Data ini diambil langsung dari Sheet (Kategori: Operasional).</p>
+                    <div class="mt-4 grid grid-cols-3 gap-4" id="operasionalData">
+                         <div class="bg-sugar-blue p-4 rounded-lg text-center"><p class="text-xs text-gray-400">Data Belum Dimuat</p></div>
                     </div>
                 </div>
             </section>
 
-            <!-- 3. PERSIAPAN PABRIK SECTION -->
+            <!-- PERSIAPAN -->
             <section id="persiapan" class="page-section">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="glass-dark p-6 rounded-xl">
-                        <h3 class="font-bold text-lg mb-4"><i class="fas fa-wrench mr-2 text-green-400"></i>Progress Maintenance</h3>
-                        <div class="space-y-4" id="maintenanceList">
-                            <!-- Data Diisi JS -->
-                        </div>
+                        <h3 class="font-bold text-lg mb-4 text-green-400"><i class="fas fa-wrench mr-2"></i>Maintenance</h3>
+                        <div id="maintenanceList" class="space-y-3"></div>
                     </div>
                     <div class="glass-dark p-6 rounded-xl">
-                        <h3 class="font-bold text-lg mb-4"><i class="fas fa-truck mr-2 text-yellow-400"></i>Progress Procurement</h3>
-                        <div class="space-y-4" id="procurementList">
-                            <!-- Data Diisi JS -->
-                        </div>
+                        <h3 class="font-bold text-lg mb-4 text-yellow-400"><i class="fas fa-truck mr-2"></i>Procurement</h3>
+                        <div id="procurementList" class="space-y-3"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- 4. KEUANGAN SECTION -->
+            <!-- KEUANGAN -->
             <section id="keuangan" class="page-section">
                 <div class="glass-dark p-6 rounded-xl">
-                    <h3 class="font-bold text-lg mb-4">Ringkasan Keuangan Bulan Ini</h3>
+                    <h3 class="font-bold text-lg mb-4">Ringkasan Keuangan</h3>
                     <table class="w-full text-sm">
-                        <thead>
-                            <tr class="border-b border-gray-700 text-left text-gray-400">
-                                <th class="pb-3">Deskripsi</th>
-                                <th class="pb-3">Anggaran</th>
-                                <th class="pb-3">Realisasi</th>
-                                <th class="pb-3">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="keuanganTable">
-                            <!-- Data Diisi JS -->
-                        </tbody>
+                        <thead><tr class="border-b border-gray-700 text-gray-400 text-left"><th class="pb-3">Item</th><th>Anggaran</th><th>Realisasi</th><th>Status</th></tr></thead>
+                        <tbody id="keuanganTable"></tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- 5. PENGATURAN SECTION -->
+            <!-- PENGATURAN -->
             <section id="pengaturan" class="page-section">
                 <div class="glass-dark p-6 rounded-xl">
-                    <h3 class="font-bold text-lg mb-6"><i class="fas fa-cog mr-2"></i>Pengaturan Sistem</h3>
-                    
-                    <div class="mb-6">
-                        <label class="block text-gray-400 text-sm mb-2">Sumber Data Google Sheet (CSV Format)</label>
-                        <input type="text" id="inputSheetUrl" class="w-full bg-sugar-dark border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-sugar-accent" placeholder="Paste URL Google Sheet Published CSV disini">
-                        <p class="text-xs text-gray-500 mt-2">Contoh Format: https://docs.google.com/spreadsheets/d/ID_ANDA/export?format=csv</p>
-                    </div>
-
-                    <div class="mb-6">
-                        <label class="block text-gray-400 text-sm mb-2">Notifikasi</label>
-                        <div class="flex items-center gap-3">
-                            <input type="checkbox" id="notifSwitch" class="w-5 h-5 accent-pink-500" checked>
-                            <span>Aktifkan notifikasi jika progress di bawah 50%</span>
-                        </div>
-                    </div>
-
-                    <button onclick="saveSettings()" class="bg-sugar-accent hover:bg-pink-600 px-6 py-2 rounded-lg font-semibold transition">
-                        Simpan Pengaturan
-                    </button>
+                    <h3 class="font-bold text-lg mb-6">Pengaturan Data Source</h3>
+                    <label class="block text-gray-400 text-sm mb-2">URL Google Sheet (CSV Published)</label>
+                    <input type="text" id="inputSheetUrl" class="w-full bg-sugar-dark border border-gray-700 rounded-lg p-3 text-white mb-4" placeholder="Paste Link Disini">
+                    <button onclick="updateSheetUrl()" class="bg-sugar-accent hover:bg-pink-600 px-6 py-2 rounded-lg font-semibold transition">Simpan & Refresh Data</button>
                 </div>
             </section>
-
         </div>
     </main>
 
     <script>
         // ==========================================
-        // LOGIKA NAVIGASI
+        // KONFIGURASI - LINK ANDA SUDAH DIPASANG DI BAWAH INI
         // ==========================================
+        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRJsjpWR-UY6eYcHuN0tbaMOOnh5epobM4VoXkVY2jK-jWVksIYuZvVrVl7_rbdiLrH3D-nGuWV9Ble/pub?gid=0&single=true&output=csv";
+
+        let rawData = [];
+
         function navigateTo(pageId) {
-            // Sembunyikan semua section
             document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-            // Tampilkan section yang dipilih
             document.getElementById(pageId).classList.add('active');
-
-            // Update active state di sidebar
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            // Cari tombol yang memanggil fungsi ini dan aktifkan ( cara simpel: loop manual)
             const navMap = { 'home': 0, 'operasional': 1, 'persiapan': 2, 'keuangan': 3, 'pengaturan': 4 };
-            const navButtons = document.querySelectorAll('.nav-item');
-            if (navMap[pageId] !== undefined) {
-                navButtons[navMap[pageId]].classList.add('active');
-            }
-
-            // Update Judul Header
-            const titles = {
-                'home': ['Dashboard Utama', 'Selamat datang di sistem monitoring giling.'],
-                'operasional': ['Kinerja Operasional', 'Data real-time angka giling dan tebu.'],
-                'persiapan': ['Persiapan Pabrik', 'Status maintenance dan procurement.'],
-                'keuangan': ['Kinerja Keuangan', 'Laporan finansial dan anggaran.'],
-                'pengaturan': ['Pengaturan', 'Konfigurasi sistem dan sumber data.']
-            };
-            document.getElementById('pageTitle').innerText = titles[pageId][0];
-            document.getElementById('pageSubtitle').innerText = titles[pageId][1];
+            document.querySelectorAll('.nav-item')[navMap[pageId]].classList.add('active');
         }
 
-        // ==========================================
-        // DATA SIMULASI (Pengganti Google Sheet)
-        // ==========================================
-        // Untuk menghubungkan ke Google Sheet asli, ganti logic load data di bawah ini
-        // menggunakan fetch() ke URL CSV Google Sheet Anda.
-        
-        const dummyMaintenance = [
-            { name: "Overhaul Mesin Giling", progress: 85, status: "ok" },
-            { name: "Perbaikan Boiler", progress: 40, status: "delayed" },
-            { name: "Pengecekan Turbin", progress: 100, status: "done" }
-        ];
+        function loadSheetData() {
+            const url = document.getElementById('inputSheetUrl').value || SHEET_URL;
+            document.getElementById('syncStatus').innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Syncing...';
+            
+            Papa.parse(url, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    rawData = results.data;
+                    console.log("Data diterima:", rawData);
+                    document.getElementById('syncStatus').innerHTML = '<i class="fas fa-check-circle mr-1 text-green-400"></i> Data Synced';
+                    processData();
+                    runAIAnalysis();
+                },
+                error: function(err) {
+                    console.error(err);
+                    document.getElementById('syncStatus').innerHTML = '<i class="fas fa-times-circle mr-1 text-red-400"></i> Error Load Data';
+                }
+            });
+        }
 
-        const dummyProcurement = [
-            { name: "Pembelian Bahan Kimia", progress: 90, status: "ok" },
-            { name: "Sparepart Conveyor", progress: 20, status: "risk" }
-        ];
+        function processData() {
+            const maintenance = rawData.filter(d => d.Kategori && d.Kategori.toLowerCase() === 'maintenance');
+            const procurement = rawData.filter(d => d.Kategori && d.Kategori.toLowerCase() === 'procurement');
+            const keuangan = rawData.filter(d => d.Kategori && d.Kategori.toLowerCase() === 'keuangan');
 
-        const dummyKeuangan = [
-            { desc: "Operasional Pabrik", budget: "Rp 5 M", realisasi: "Rp 4.2 M", status: "normal" },
-            { desc: "Gaji Karyawan", budget: "Rp 2 M", realisasi: "Rp 2 M", status: "normal" },
-            { desc: "Perawatan Mendadak", budget: "Rp 500 Jt", realisasi: "Rp 600 Jt", status: "over" }
-        ];
-
-        // ==========================================
-        // FUNGSI RENDER DATA
-        // ==========================================
-        function renderDashboardData() {
-            // Render Maintenance
             const mList = document.getElementById('maintenanceList');
-            mList.innerHTML = dummyMaintenance.map(item => `
+            mList.innerHTML = maintenance.length === 0 ? '<p class="text-gray-500">Tidak ada data / Periksa nama kolom Kategori</p>' : maintenance.map(item => `
                 <div class="bg-sugar-dark p-3 rounded-lg">
                     <div class="flex justify-between text-sm mb-1">
-                        <span>${item.name}</span>
-                        <span class="text-xs ${item.status === 'delayed' ? 'text-red-400' : 'text-green-400'}">${item.progress}%</span>
+                        <span>${item['Nama Item']}</span>
+                        <span class="text-xs ${item.Status === 'delayed' ? 'text-red-400' : 'text-green-400'}">${item.Progress}%</span>
                     </div>
                     <div class="w-full bg-gray-700 rounded-full h-2">
-                        <div class="progress-bar ${item.status === 'delayed' ? 'bg-red-500' : 'bg-green-500'} h-2 rounded-full" style="width: ${item.progress}%"></div>
+                        <div class="progress-bar ${item.Status === 'delayed' ? 'bg-red-500' : 'bg-green-500'} h-2 rounded-full" style="width: ${item.Progress}%"></div>
                     </div>
                 </div>
             `).join('');
 
-            // Render Procurement
             const pList = document.getElementById('procurementList');
-            pList.innerHTML = dummyProcurement.map(item => `
-                <div class="bg-sugar-dark p-3 rounded-lg">
+            pList.innerHTML = procurement.length === 0 ? '<p class="text-gray-500">Tidak ada data</p>' : procurement.map(item => `
+                 <div class="bg-sugar-dark p-3 rounded-lg">
                     <div class="flex justify-between text-sm mb-1">
-                        <span>${item.name}</span>
-                        <span class="text-xs ${item.status === 'risk' ? 'text-yellow-400' : 'text-blue-400'}">${item.progress}%</span>
+                        <span>${item['Nama Item']}</span>
+                        <span class="text-xs text-yellow-400">${item.Progress}%</span>
                     </div>
                     <div class="w-full bg-gray-700 rounded-full h-2">
-                        <div class="progress-bar ${item.status === 'risk' ? 'bg-yellow-500' : 'bg-blue-500'} h-2 rounded-full" style="width: ${item.progress}%"></div>
+                        <div class="progress-bar bg-yellow-500 h-2 rounded-full" style="width: ${item.Progress}%"></div>
                     </div>
                 </div>
             `).join('');
 
-            // Render Keuangan
             const kTable = document.getElementById('keuanganTable');
-            kTable.innerHTML = dummyKeuangan.map(item => `
+            kTable.innerHTML = keuangan.length === 0 ? '<tr><td colspan="4" class="text-gray-500 py-4">Tidak ada data</td></tr>' : keuangan.map(item => {
+                const anggaran = parseFloat(item.Progress) || 0;
+                const realisasi = parseFloat(item.Status) || 0;
+                const percent = anggaran > 0 ? Math.round((realisasi/anggaran)*100) : 0;
+                const statusClass = percent > 100 ? 'bg-red-900 text-red-300' : 'bg-green-900 text-green-300';
+                const statusText = percent > 100 ? 'Over Budget' : 'Normal';
+                
+                return `
                 <tr class="border-b border-gray-800">
-                    <td class="py-3">${item.desc}</td>
-                    <td>${item.budget}</td>
-                    <td>${item.realisasi}</td>
-                    <td><span class="px-2 py-1 rounded-full text-xs ${item.status === 'over' ? 'bg-red-900 text-red-300' : 'bg-green-900 text-green-300'}">${item.status === 'over' ? 'Over Budget' : 'Normal'}</span></td>
+                    <td class="py-3">${item['Nama Item']}</td>
+                    <td>Rp ${anggaran.toLocaleString('id-ID')}</td>
+                    <td>Rp ${realisasi.toLocaleString('id-ID')}</td>
+                    <td><span class="px-2 py-1 rounded-full text-xs ${statusClass}">${statusText}</span></td>
                 </tr>
-            `).join('');
+            `}).join('');
         }
 
-        // ==========================================
-        // LOGIKA AI ANALYSIS
-        // ==========================================
         function runAIAnalysis() {
             const container = document.getElementById('aiHomeContent');
-            container.innerHTML = `<p class="text-purple-400 animate-pulse">Menganalisis data operasional dan keuangan...</p>`;
+            container.innerHTML = `<p class="text-purple-400 animate-pulse"><i class="fas fa-brain mr-2"></i>AI sedang menganalisis data sheet...</p>`;
             
             setTimeout(() => {
-                // Simulasi Logika AI
-                const delayedItems = dummyMaintenance.filter(i => i.status === 'delayed').length;
-                const overBudget = dummyKeuangan.filter(i => i.status === 'over').length;
+                const maintenance = rawData.filter(d => d.Kategori && d.Kategori.toLowerCase() === 'maintenance');
+                const delayedCount = maintenance.filter(i => i.Status === 'delayed').length;
                 
+                const keuangan = rawData.filter(d => d.Kategori && d.Kategori.toLowerCase() === 'keuangan');
+                let totalAnggaran = 0;
+                let totalRealisasi = 0;
+                
+                keuangan.forEach(k => {
+                    totalAnggaran += parseFloat(k.Progress) || 0; 
+                    totalRealisasi += parseFloat(k.Status) || 0;  
+                });
+
                 let analysis = `<div class="space-y-3">`;
                 
-                if (delayedItems > 0) {
-                    analysis += `<p class="text-red-400"><i class="fas fa-exclamation-circle mr-2"></i>Terdeteksi <strong>${delayedItems} pekerjaan maintenance</strong> terlambat. AI menyarankan penambahan shift kerja untuk mengejar target.</p>`;
+                if (maintenance.length > 0) {
+                    if (delayedCount > 0) {
+                        analysis += `<p class="text-red-400"><i class="fas fa-exclamation-circle mr-2"></i>Terdeteksi <strong>${delayedCount} pekerjaan maintenance</strong> terlambat. Sistem menyarankan penambahan shift kerja.</p>`;
+                    } else {
+                        analysis += `<p class="text-green-400"><i class="fas fa-check-circle mr-2"></i>Semana progress maintenance berjalan sesuai jadwal.</p>`;
+                    }
+                }
+
+                if (keuangan.length > 0) {
+                    if (totalRealisasi > totalAnggaran) {
+                        analysis += `<p class="text-yellow-400"><i class="fas fa-coins mr-2"></i>Peringatan: Total realisasi (Rp ${totalRealisasi.toLocaleString('id-ID')}) melebihi anggaran (Rp ${totalAnggaran.toLocaleString('id-ID')}).</p>`;
+                    } else {
+                         analysis += `<p class="text-blue-400"><i class="fas fa-piggy-bank mr-2"></i>Pengelolaan anggaran baik. Sisa anggaran: Rp ${(totalAnggaran - totalRealisasi).toLocaleString('id-ID')}.</p>`;
+                    }
                 } else {
-                    analysis += `<p class="text-green-400"><i class="fas fa-check-circle mr-2"></i>Semana progress maintenance berjalan sesuai jadwal.</p>`;
+                    analysis += `<p class="text-gray-400">Tidak cukup data untuk analisis mendalam. Pastikan judul kolom di Google Sheet benar.</p>`;
                 }
 
-                if (overBudget > 0) {
-                    analysis += `<p class="text-yellow-400"><i class="fas fa-coins mr-2"></i>Peringatan: Ada item yang over budget. Mohon lakukan review pengeluaran mendadak.</p>`;
-                }
-
-                analysis += `<p class="text-gray-400 text-xs mt-4">Analisis dihasilkan berdasarkan data tanggal ${new Date().toLocaleDateString('id-ID')}.</p></div>`;
+                analysis += `<p class="text-gray-600 text-xs mt-4 border-t border-gray-700 pt-2">Analisis berdasarkan ${rawData.length} baris data di Google Sheet.</p></div>`;
                 
                 container.innerHTML = analysis;
-            }, 1500);
+            }, 1000);
         }
 
-        function saveSettings() {
-            alert("Pengaturan berhasil disimpan! (Simulasi)");
+        function updateSheetUrl() {
+            alert("Konfigurasi disimpan. Halaman akan memuat ulang data.");
+            loadSheetData();
         }
 
-        // Inisialisasi
         document.addEventListener('DOMContentLoaded', () => {
-            renderDashboardData();
-            runAIAnalysis();
+            document.getElementById('inputSheetUrl').value = SHEET_URL;
+            loadSheetData();
         });
     </script>
 </body>
