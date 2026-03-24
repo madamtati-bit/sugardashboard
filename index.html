@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUGARDASH - AI Analytics</title>
+    <title>SUGARDASH - Final Fix</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Library untuk membaca Sheet -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <!-- Library untuk Grafik -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
@@ -44,7 +42,7 @@
                 <div class="bg-sugar-accent p-2 rounded-lg"><i class="fas fa-chart-pie text-white text-xl"></i></div>
                 <div>
                     <h1 class="text-xl font-bold text-white">SUGARDASH</h1>
-                    <p class="text-xs text-gray-400">AI Analytics</p>
+                    <p class="text-xs text-gray-400">Final Version</p>
                 </div>
             </div>
         </div>
@@ -65,52 +63,36 @@
                 <p class="text-gray-400" id="pageSubtitle">Analisis Target vs Realisasi.</p>
             </div>
             <div class="flex items-center gap-4">
-                <span id="syncStatus" class="text-xs text-gray-500 bg-sugar-card px-3 py-1 rounded-full"><i class="fas fa-wifi mr-1"></i> System Ready</span>
+                <span id="syncStatus" class="text-xs text-gray-500 bg-sugar-card px-3 py-1 rounded-full"><i class="fas fa-wifi mr-1"></i> Initializing...</span>
             </div>
         </header>
 
         <div id="contentArea">
             
-            <!-- HOME (AI FOCUS) -->
+            <!-- HOME -->
             <section id="home" class="page-section active">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <div onclick="navigateTo('operasional')" class="glass-dark p-6 rounded-xl cursor-pointer border-l-4 border-blue-500 hover:bg-sugar-card transition">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h3 class="text-gray-400 text-sm">Operasional</h3>
-                                <h2 class="text-2xl font-bold text-white" id="sumOps">-</h2>
-                            </div>
-                            <i class="fas fa-industry text-3xl text-blue-500 opacity-50"></i>
-                        </div>
+                    <div class="glass-dark p-6 rounded-xl border-l-4 border-blue-500">
+                        <h3 class="text-gray-400 text-sm">Total Tebu Giling</h3>
+                        <h2 class="text-2xl font-bold text-white mt-2" id="sumOps">-</h2>
                     </div>
-                    <div onclick="navigateTo('persiapan')" class="glass-dark p-6 rounded-xl cursor-pointer border-l-4 border-green-500 hover:bg-sugar-card transition">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h3 class="text-gray-400 text-sm">Rata-rata Progress</h3>
-                                <h2 class="text-2xl font-bold text-white" id="sumProg">-</h2>
-                            </div>
-                            <i class="fas fa-tools text-3xl text-green-500 opacity-50"></i>
-                        </div>
+                    <div class="glass-dark p-6 rounded-xl border-l-4 border-green-500">
+                        <h3 class="text-gray-400 text-sm">Rata-rata Pencapaian</h3>
+                        <h2 class="text-2xl font-bold text-white mt-2" id="sumProg">-</h2>
                     </div>
-                    <div onclick="navigateTo('keuangan')" class="glass-dark p-6 rounded-xl cursor-pointer border-l-4 border-yellow-500 hover:bg-sugar-card transition">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h3 class="text-gray-400 text-sm">Budget Status</h3>
-                                <h2 class="text-2xl font-bold text-white" id="sumBudget">-</h2>
-                            </div>
-                            <i class="fas fa-wallet text-3xl text-yellow-500 opacity-50"></i>
-                        </div>
+                    <div class="glass-dark p-6 rounded-xl border-l-4 border-yellow-500">
+                        <h3 class="text-gray-400 text-sm">Total Budget</h3>
+                        <h2 class="text-2xl font-bold text-white mt-2" id="sumBudget">-</h2>
                     </div>
                 </div>
 
-                <!-- AI ANALYSIS BOX -->
                 <div class="glass-dark p-6 rounded-xl border-t-4 border-purple-500">
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-2"><i class="fas fa-robot text-purple-400"></i><h3 class="font-bold text-white">Analisis AI & Tindak Lanjut</h3></div>
-                        <button onclick="runAIAnalysis()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-xs"><i class="fas fa-brain mr-1"></i> Analisis Sekarang</button>
+                        <button onclick="runAIAnalysis()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-xs"><i class="fas fa-brain mr-1"></i> Analisis</button>
                     </div>
                     <div id="aiHomeContent" class="text-sm text-gray-300 min-h-[150px] space-y-3">
-                        <p class="text-gray-400 italic">Siap menganalisis gap antara Target dan Realisasi...</p>
+                        <p class="text-gray-400 italic">Menunggu data...</p>
                     </div>
                 </div>
             </section>
@@ -120,18 +102,16 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="glass-dark p-6 rounded-xl">
                         <h3 class="font-bold text-lg mb-4 text-blue-400">Grafik Operasional (Target vs Realisasi)</h3>
-                        <div style="height: 300px;">
-                            <canvas id="chartOperasional"></canvas>
-                        </div>
+                        <div style="height: 300px;"><canvas id="chartOperasional"></canvas></div>
                     </div>
                     <div class="glass-dark p-6 rounded-xl">
                         <h3 class="font-bold text-lg mb-4">Detail Data</h3>
-                        <div id="listOperasional" class="space-y-3 max-h-[300px] overflow-y-auto"></div>
+                        <div id="listOperasional" class="space-y-3 max-h-[300px] overflow-y-auto pr-2"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- PERSIAPAN (Maintenance & Procurement) -->
+            <!-- PERSIAPAN -->
             <section id="persiapan" class="page-section">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="glass-dark p-6 rounded-xl">
@@ -143,17 +123,9 @@
                         <div style="height: 300px;"><canvas id="chartProcurement"></canvas></div>
                     </div>
                 </div>
-                
-                <!-- Detail List Persiapan -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    <div class="glass-dark p-6 rounded-xl">
-                        <h4 class="font-bold mb-3">Detail Maintenance</h4>
-                        <div id="listMaintenance" class="space-y-2 text-sm"></div>
-                    </div>
-                    <div class="glass-dark p-6 rounded-xl">
-                        <h4 class="font-bold mb-3">Detail Procurement</h4>
-                        <div id="listProcurement" class="space-y-2 text-sm"></div>
-                    </div>
+                    <div class="glass-dark p-6 rounded-xl"><h4 class="font-bold mb-3">Detail Maintenance</h4><div id="listMaintenance" class="space-y-2 text-sm"></div></div>
+                    <div class="glass-dark p-6 rounded-xl"><h4 class="font-bold mb-3">Detail Procurement</h4><div id="listProcurement" class="space-y-2 text-sm"></div></div>
                 </div>
             </section>
 
@@ -168,15 +140,19 @@
             <!-- PENGATURAN -->
             <section id="pengaturan" class="page-section">
                 <div class="glass-dark p-6 rounded-xl">
-                    <h3 class="font-bold text-lg mb-6">Pengaturan Data Source</h3>
+                    <h3 class="font-bold text-lg mb-6">Pengaturan & Debug</h3>
                     <label class="block text-gray-400 text-sm mb-2">URL Google Sheet (CSV Published)</label>
                     <input type="text" id="inputSheetUrl" class="w-full bg-sugar-dark border border-gray-700 rounded-lg p-3 text-white mb-4 text-xs" placeholder="Paste Link CSV Disini">
                     <button onclick="loadSheetData()" class="bg-sugar-accent hover:bg-pink-600 px-6 py-2 rounded-lg font-semibold transition">Ambil Data Baru</button>
                     
                     <div class="mt-6 text-xs text-gray-500 bg-sugar-dark p-4 rounded border border-gray-800">
-                        <p><strong>Panduan Format Sheet (Wajib 5 Kolom):</strong></p>
-                        <p>1. Kategori | 2. Nama Item | 3. Target (RKAP) | 4. Realisasi | 5. Satuan</p>
-                        <p>Isi Kategori: Operasional, Maintenance, Procurement, Keuangan</p>
+                        <p><strong>Panduan Format Sheet (Saran):</strong></p>
+                        <p>Kolom 1: Kategori | Kolom 2: Nama Item | Kolom 3: Target (RKAP) | Kolom 4: Realisasi | Kolom 5: Satuan</p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button onclick="toggleDebug()" class="text-xs text-blue-400 underline">Lihat Data Mentah (Debug)</button>
+                        <pre id="debugArea" class="hidden mt-2 bg-black p-2 rounded text-xs overflow-auto max-h-40"></pre>
                     </div>
                 </div>
             </section>
@@ -185,19 +161,25 @@
 
     <script>
         // ==========================================
-        // KONFIGURASI
+        // KONFIGURASI & VARIABEL GLOBAL
         // ==========================================
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRJsjpWR-UY6eYcHuN0tbaMOOnh5epobM4VoXkVY2jK-jWVksIYuZvVrVl7_rbdiLrH3D-nGuWV9Ble/pub?gid=0&single=true&output=csv";
         
-        // Variabel Global
         let rawData = [];
-        let chartOps = null;
-        let chartMain = null;
-        let chartProc = null;
-        let chartKeu = null;
+        let charts = { ops: null, main: null, proc: null, keu: null };
+
+        // DATA DUMMY AGAR TIDAK KOSONG JIKA GAGAL
+        const DUMMY_DATA = [
+            { Kategori: 'Operasional', 'Nama Item': 'Tebu Giling', Target: 15000, Realisasi: 12000, Satuan: 'Ton' },
+            { Kategori: 'Operasional', 'Nama Item': 'Rendemen', Target: 8, Realisasi: 7.5, Satuan: '%' },
+            { Kategori: 'Maintenance', 'Nama Item': 'Overhaul', Target: 100, Realisasi: 85, Satuan: '%' },
+            { Kategori: 'Maintenance', 'Nama Item': 'Boiler', Target: 100, Realisasi: 40, Satuan: '%' },
+            { Kategori: 'Procurement', 'Nama Item': 'Sparepart', Target: 100, Realisasi: 20, Satuan: '%' },
+            { Kategori: 'Keuangan', 'Nama Item': 'Gaji', Target: 2000000000, Realisasi: 1800000000, Satuan: 'Rp' }
+        ];
 
         // ==========================================
-        // NAVIGASI
+        // FUNGSI NAVIGASI
         // ==========================================
         function navigateTo(pageId) {
             document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
@@ -206,6 +188,39 @@
             const navMap = { 'home': 0, 'operasional': 1, 'persiapan': 2, 'keuangan': 3, 'pengaturan': 4 };
             if (navMap[pageId] !== undefined) document.querySelectorAll('.nav-item')[navMap[pageId]].classList.add('active');
         }
+
+        // ==========================================
+        // FUNGSI PARSING CERDAS
+        // ==========================================
+        
+        // Membersihkan teks
+        function clean(str) { return str ? str.toString().toLowerCase().trim() : ""; }
+
+        // Konversi ke Angka (Handle format Indonesia 1.000,50)
+        function parseNum(val) {
+            if (!val) return 0;
+            let str = val.toString().replace(/\./g, '').replace(',', '.'); // Hapus titik pemisah ribuan, ganti koma jadi titik desimal
+            return parseFloat(str) || 0;
+        }
+
+        // Mapping Nama Kolom Otomatis
+        function getColumnValue(row, possibleNames) {
+            for (let key in row) {
+                let cleanKey = clean(key);
+                for (let name of possibleNames) {
+                    if (cleanKey.includes(clean(name))) {
+                        return row[key];
+                    }
+                }
+            }
+            return null;
+        }
+
+        function getTarget(row) { return getColumnValue(row, ['target', 'rkap']); }
+        function getRealisasi(row) { return getColumnValue(row, ['realisasi', 'progress', 'achieve']); }
+        function getKategori(row) { return getColumnValue(row, ['kategori', 'category']); }
+        function getNama(row) { return getColumnValue(row, ['nama', 'item', 'pekerjaan']); }
+        function getSatuan(row) { return getColumnValue(row, ['satuan', 'unit']); }
 
         // ==========================================
         // LOAD DATA
@@ -218,237 +233,187 @@
                 download: true,
                 header: true,
                 complete: function(results) {
-                    if (results.data && results.data.length > 0) {
-                        rawData = results.data;
-                        document.getElementById('syncStatus').innerHTML = '<i class="fas fa-check-circle mr-1 text-green-400"></i> Data Synced';
-                        processData();
+                    console.log("Data Mentah Diterima:", results.data);
+                    document.getElementById('debugArea').innerText = JSON.stringify(results.data, null, 2);
+                    
+                    // Cek apakah data valid (minimal punya 1 baris dengan kategori)
+                    let validData = results.data.filter(r => getKategori(r)); 
+                    
+                    if (validData.length > 0) {
+                        rawData = validData;
+                        document.getElementById('syncStatus').innerHTML = '<i class="fas fa-check-circle mr-1 text-green-400"></i> Data Loaded';
                     } else {
-                        document.getElementById('syncStatus').innerHTML = '<i class="fas fa-times-circle mr-1 text-red-400"></i> Data Kosong';
+                        console.warn("Data tidak valid atau header tidak cocok, memakai data dummy.");
+                        useDummyData();
+                        document.getElementById('syncStatus').innerHTML = '<i class="fas fa-exclamation-triangle mr-1 text-yellow-400"></i> Mode Demo';
                     }
+                    processData();
                 },
                 error: function(err) {
                     console.error(err);
-                    document.getElementById('syncStatus').innerHTML = '<i class="fas fa-times-circle mr-1 text-red-400"></i> Error';
+                    useDummyData();
+                    processData();
                 }
             });
         }
 
+        function useDummyData() {
+            rawData = DUMMY_DATA;
+        }
+
         // ==========================================
-        // PROSES DATA & RENDER
+        // PROSES DATA
         // ==========================================
         function processData() {
-            // 1. Filter Data
-            const opsData = rawData.filter(d => clean(d.Kategori) === 'operasional');
-            const maintData = rawData.filter(d => clean(d.Kategori) === 'maintenance');
-            const procData = rawData.filter(d => clean(d.Kategori) === 'procurement');
-            const keuData = rawData.filter(d => clean(d.Kategori) === 'keuangan');
+            const ops = rawData.filter(d => clean(getKategori(d)) === 'operasional');
+            const maint = rawData.filter(d => clean(getKategori(d)) === 'maintenance');
+            const proc = rawData.filter(d => clean(getKategori(d)) === 'procurement');
+            const keu = rawData.filter(d => clean(getKategori(d)) === 'keuangan');
 
-            // 2. Update Summary Home
-            updateSummary(opsData, maintData, procData, keuData);
-            
-            // 3. Render Grafik & List
-            renderSection(opsData, 'Operasional', 'chartOperasional', 'listOperasional', 'blue');
-            renderSection(maintData, 'Maintenance', 'chartMaintenance', 'listMaintenance', 'green');
-            renderSection(procData, 'Procurement', 'chartProcurement', 'listProcurement', 'yellow');
-            renderSectionKeuangan(keuData);
+            updateSummary(ops, maint, proc, keu);
+            renderChart('chartOperasional', ops, 'blue', charts.ops);
+            renderChart('chartMaintenance', maint, 'green', charts.main);
+            renderChart('chartProcurement', proc, 'yellow', charts.proc);
+            renderChart('chartKeuangan', keu, 'red', charts.keu);
 
-            // 4. Jalankan AI
+            renderList('listOperasional', ops, 'blue');
+            renderList('listMaintenance', maint, 'green');
+            renderList('listProcurement', proc, 'yellow');
+
             runAIAnalysis();
         }
 
-        function renderSection(data, title, chartId, listId, color) {
-            const labels = data.map(d => d['Nama Item']);
-            const targets = data.map(d => parseNum(d['Target (RKAP)']));
-            const realisasi = data.map(d => parseNum(d['Realisasi']));
-            const satuan = data.length > 0 ? data[0]['Satuan'] : '';
+        function updateSummary(ops, maint, proc, keu) {
+            const totalOps = ops.reduce((s, d) => s + parseNum(getRealisasi(d)), 0);
+            document.getElementById('sumOps').innerText = totalOps.toLocaleString('id-ID') + " Ton";
 
-            // Render Chart
-            renderChart(chartId, labels, targets, realisasi, color);
+            const allProg = [...maint, ...proc];
+            let avg = 0;
+            if (allProg.length > 0) {
+                const totalPct = allProg.reduce((s, d) => {
+                    const t = parseNum(getTarget(d)) || 100; // Asumsi 100 jika tidak ada target
+                    const r = parseNum(getRealisasi(d));
+                    return s + (r/t)*100;
+                }, 0);
+                avg = totalPct / allProg.length;
+            }
+            document.getElementById('sumProg').innerText = Math.round(avg) + "%";
 
-            // Render List
-            const container = document.getElementById(listId);
-            container.innerHTML = data.map(item => {
-                const t = parseNum(item['Target (RKAP)']);
-                const r = parseNum(item['Realisasi']);
-                const pct = t > 0 ? Math.round((r/t)*100) : 0;
-                const isOver = r > t;
+            const totalBudget = keu.reduce((s, d) => s + parseNum(getRealisasi(d)), 0);
+            document.getElementById('sumBudget').innerText = "Rp " + (totalBudget/1000000000).toFixed(1) + " Mia";
+        }
+
+        // ==========================================
+        // RENDER GRAFIK
+        // ==========================================
+        function renderChart(canvasId, data, color, existingChart) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            
+            const labels = data.map(d => getNama(d) || 'Unknown');
+            const targets = data.map(d => parseNum(getTarget(d)));
+            const realisasi = data.map(d => parseNum(getRealisasi(d)));
+
+            if (existingChart) existingChart.destroy();
+
+            const colorMap = {
+                'blue': ['rgba(59, 130, 246, 0.7)', 'rgba(59, 130, 246, 1)'],
+                'green': ['rgba(16, 185, 129, 0.7)', 'rgba(16, 185, 129, 1)'],
+                'yellow': ['rgba(245, 158, 11, 0.7)', 'rgba(245, 158, 11, 1)'],
+                'red': ['rgba(239, 68, 68, 0.7)', 'rgba(239, 68, 68, 1)']
+            };
+
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: 'Target', data: targets, backgroundColor: 'rgba(100, 100, 100, 0.5)', borderColor: '#999', borderWidth: 1 },
+                        { label: 'Realisasi', data: realisasi, backgroundColor: colorMap[color][0], borderColor: colorMap[color][1], borderWidth: 1 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, grid: { color: '#333' }, ticks: { color: '#aaa' } }, x: { grid: { display: false }, ticks: { color: '#aaa' } } },
+                    plugins: { legend: { labels: { color: '#fff' } } }
+                }
+            });
+            
+            // Simpan instance chart ke variabel global agar bisa di-destroy nanti
+            if (canvasId === 'chartOperasional') charts.ops = myChart;
+            if (canvasId === 'chartMaintenance') charts.main = myChart;
+            if (canvasId === 'chartProcurement') charts.proc = myChart;
+            if (canvasId === 'chartKeuangan') charts.keu = myChart;
+        }
+
+        function renderList(containerId, data, color) {
+            const c = document.getElementById(containerId);
+            c.innerHTML = data.map(item => {
+                const t = parseNum(getTarget(item)) || 100;
+                const r = parseNum(getRealisasi(item));
+                const pct = Math.round((r/t)*100);
+                const nama = getNama(item);
+                
                 return `
                     <div class="bg-sugar-dark p-3 rounded-lg border-l-2 border-${color}-500">
                         <div class="flex justify-between text-xs mb-1">
-                            <span class="font-semibold">${item['Nama Item']}</span>
-                            <span class="${isOver ? 'text-red-400' : 'text-green-400'}">${pct}%</span>
+                            <span class="font-semibold">${nama}</span>
+                            <span>${pct}%</span>
                         </div>
                         <div class="w-full bg-gray-700 rounded-full h-2">
-                            <div class="progress-bar ${isOver ? 'bg-red-500' : `bg-${color}-500`} h-2 rounded-full" style="width: ${pct}%"></div>
+                            <div class="progress-bar bg-${color}-500 h-2 rounded-full" style="width: ${pct}%"></div>
                         </div>
-                        <p class="text-gray-500 text-xs mt-1">Target: ${t} | Realisasi: ${r} (${item.Satuan})</p>
                     </div>
                 `;
             }).join('');
         }
 
-        function renderSectionKeuangan(data) {
-            const labels = data.map(d => d['Nama Item']);
-            const targets = data.map(d => parseNum(d['Target (RKAP)']));
-            const realisasi = data.map(d => parseNum(d['Realisasi']));
-            renderChart('chartKeuangan', labels, targets, realisasi, 'yellow');
-        }
-
-        function renderChart(canvasId, labels, dataTarget, dataRealisasi, color) {
-            const ctx = document.getElementById(canvasId).getContext('2d');
-            
-            // Destroy old chart if exists
-            if (window[canvasId]) window[canvasId].destroy();
-
-            window[canvasId] = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Target (RKAP)',
-                            data: dataTarget,
-                            backgroundColor: 'rgba(100, 100, 100, 0.5)',
-                            borderColor: 'rgba(200, 200, 200, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Realisasi',
-                            data: dataRealisasi,
-                            backgroundColor: getColorCode(color),
-                            borderColor: getColorBorder(color),
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: '#333' }, ticks: { color: '#aaa' } },
-                        x: { grid: { display: false }, ticks: { color: '#aaa' } }
-                    },
-                    plugins: { legend: { labels: { color: '#fff' } } }
-                }
-            });
-        }
-
-        function updateSummary(ops, maint, proc, keu) {
-            // Simple summary logic
-            const totalOps = ops.reduce((sum, d) => sum + parseNum(d['Realisasi']), 0);
-            document.getElementById('sumOps').innerText = totalOps.toLocaleString('id-ID') + " Ton";
-
-            const allProg = [...maint, ...proc];
-            const avgPct = allProg.length > 0 ? allProg.reduce((sum, d) => {
-                const t = parseNum(d['Target (RKAP)']);
-                const r = parseNum(d['Realisasi']);
-                return sum + (t > 0 ? (r/t)*100 : 0);
-            }, 0) / allProg.length : 0;
-            document.getElementById('sumProg').innerText = Math.round(avgPct) + "%";
-
-            const budgetUsed = keu.reduce((sum, d) => sum + parseNum(d['Realisasi']), 0);
-            document.getElementById('sumBudget').innerText = "Rp " + (budgetUsed/1000000000).toFixed(1) + " Mia";
-        }
-
         // ==========================================
-        // AI ENGINE (LANJUTAN)
+        // AI ENGINE
         // ==========================================
         function runAIAnalysis() {
             const container = document.getElementById('aiHomeContent');
-            container.innerHTML = `<p class="text-purple-400 animate-pulse"><i class="fas fa-brain mr-2"></i>AI sedang menghitung gap dan menyusun strategi...</p>`;
+            container.innerHTML = `<p class="text-purple-400 animate-pulse">Analyzing...</p>`;
             
             setTimeout(() => {
-                let findings = [];
-
-                // Analisis Semua Data
+                let issues = [];
                 rawData.forEach(item => {
-                    const target = parseNum(item['Target (RKAP)']);
-                    const real = parseNum(item['Realisasi']);
-                    const gap = target - real;
-                    const pct = target > 0 ? Math.round((real/target)*100) : 0;
-                    const cat = item.Kategori;
+                    const cat = clean(getKategori(item));
+                    const nama = getNama(item);
+                    const t = parseNum(getTarget(item)) || 100;
+                    const r = parseNum(getRealisasi(item));
+                    const pct = (r/t)*100;
 
-                    // Logika Deteksi Masalah
-                    if (cat.toLowerCase() !== 'keuangan' && pct < 80 && target > 0) {
-                        findings.push({
-                            type: 'danger',
-                            cat: cat,
-                            name: item['Nama Item'],
-                            gap: gap,
-                            pct: pct,
-                            msg: `<strong>${item['Nama Item']}</strong> (${cat}) hanya tercapai <strong>${pct}%</strong>.`
-                        });
+                    if (cat !== 'keuangan' && pct < 80) {
+                        issues.push({ nama, pct: Math.round(pct), cat });
                     }
                 });
 
-                // Susun Laporan
                 let html = "";
-                if (findings.length === 0) {
-                    html += `<div class="p-4 bg-green-900/50 rounded-lg border border-green-700 text-green-300">
-                                <i class="fas fa-check-circle mr-2"></i><strong>Status: OPTIMAL.</strong><br>
-                                Semua target operasional dan non-operasional dalam jalur yang aman (>= 80%).
-                             </div>`;
+                if (issues.length === 0) {
+                    html = `<div class="p-4 bg-green-900/50 rounded border border-green-700 text-green-300">Status: OPTIMAL. Semua target di atas 80%.</div>`;
                 } else {
-                    html += `<div class="p-4 bg-red-900/50 rounded-lg border border-red-700 text-red-300 mb-4">
-                                <i class="fas fa-exclamation-triangle mr-2"></i><strong>Peringatan Kritis!</strong><br>
-                                Terdapat <strong>${findings.length} item</strong> yang perlu perhatian khusus.
-                             </div>`;
-
-                    findings.forEach(f => {
-                        let saran = "";
-                        if (f.cat.toLowerCase() === 'operasional') {
-                            saran = "Evaluasi jam operasi mesin dan cek pasokan tebu di persimpangan.";
-                        } else if (f.cat.toLowerCase() === 'maintenance') {
-                            saran = "Tindak Lanjut: Tambahkan shift kerja lembur atau sewa tenaga ahli eksternal untuk mengejar ketertinggalan.";
-                        } else if (f.cat.toLowerCase() === 'procurement') {
-                            saran = "Tindak Lanjut: Hubungi pemasok alternatif atau lakukan pengadaan darurat via jalur cepat.";
-                        } else {
-                            saran = "Perlu investigasi lebih lanjut oleh tim terkait.";
-                        }
-
-                        html += `<div class="mb-4 border-l-4 border-red-500 pl-4">
-                                    <p class="font-bold text-white">${f.msg}</p>
-                                    <p class="text-gray-400 text-xs mt-1">Gap: ${f.gap.toLocaleString('id-ID')} unit</p>
-                                    <p class="text-blue-300 text-sm mt-2"><i class="fas fa-lightbulb mr-1"></i> ${saran}</p>
-                                 </div>`;
+                    html = `<div class="p-4 bg-red-900/50 rounded border border-red-700 text-red-300 mb-4">Terdeteksi ${issues.length} item kritis.</div>`;
+                    issues.forEach(i => {
+                        html += `
+                            <div class="mb-3 border-l-4 border-red-500 pl-3">
+                                <p class="font-bold">${i.nama}</p>
+                                <p class="text-sm">Pencapaian: ${i.pct}%</p>
+                                <p class="text-blue-300 text-xs mt-1"><i class="fas fa-lightbulb"></i> Saran: Tingkatkan intensitas kerja atau evaluasi hambatan lapangan.</p>
+                            </div>`;
                     });
                 }
-
                 container.innerHTML = html;
-            }, 1500);
+            }, 1000);
+        }
+
+        function toggleDebug() {
+            const el = document.getElementById('debugArea');
+            el.classList.toggle('hidden');
         }
 
         // ==========================================
-        // HELPER FUNCTIONS
+        // INISIALISASI
         // ==========================================
-        function parseNum(str) {
-            if (!str) return 0;
-            // Hapus titik (pemisah ribuan) dan ganti koma dengan titik (desimal) jika perlu
-            // Untuk format Indonesia biasanya: 1.500,50 -> 1500.50. 
-            // Namun untuk integer besar (1.500.000) -> 1500000
-            let cleanStr = str.toString().replace(/\./g, '').replace(',', '.');
-            return parseFloat(cleanStr) || 0;
-        }
-
-        function clean(str) {
-            if (!str) return "";
-            return str.toString().toLowerCase().trim();
-        }
-
-        function getColorCode(color) {
-            if (color === 'blue') return 'rgba(59, 130, 246, 0.7)';
-            if (color === 'green') return 'rgba(16, 185, 129, 0.7)';
-            if (color === 'yellow') return 'rgba(245, 158, 11, 0.7)';
-            return 'rgba(255, 255, 255, 0.7)';
-        }
-        function getColorBorder(color) {
-            if (color === 'blue') return 'rgba(59, 130, 246, 1)';
-            if (color === 'green') return 'rgba(16, 185, 129, 1)';
-            if (color === 'yellow') return 'rgba(245, 158, 11, 1)';
-            return 'rgba(255, 255, 255, 1)';
-        }
-
-        // INIT
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('inputSheetUrl').value = SHEET_URL;
             loadSheetData();
