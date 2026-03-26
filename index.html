@@ -256,7 +256,7 @@
             document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            const navMap = { 'home': 0, 'operasional': 1, 'persiapan': 2, 'keuangan': 3, 'pengaturan': 4 };
+            const navMap = { 'home': 0, 'operasional': 1, 'persiapan Pabrik': 2, 'keuangan': 3, 'pengaturan': 4 };
             if (navMap[pageId] !== undefined) document.querySelectorAll('.nav-item')[navMap[pageId]].classList.add('active');
         }
 
