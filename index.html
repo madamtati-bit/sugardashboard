@@ -67,7 +67,6 @@
             </div>
         </div>
         <nav class="flex-1 p-4 space-y-2" id="mainNav">
-            <button onclick="navigateTo('home')" class="nav-item active w-full p-4 space-y-2" id="mainNav">
             <button onclick="navigateTo('home')" class="nav-item active w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-home"></i> Dashboard Utama</button>
             <button onclick="navigateTo('operasional')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-cogs"></i> Kinerja Operasional</button>
             <button onclick="navigateTo('persiapan')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-tools"></i> Persiapan Pabrik</button>
@@ -90,16 +89,16 @@
 
         <div id="contentArea">
             
-            <!-- HOME (NEW LAYOUT) -->
+            <!-- HOME (UPDATED) -->
             <section id="home" class="page-section active">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     
-                    <!-- Card 1: Maintenance Pabrik -->
+                    <!-- Card 1: Maintenance Pabrik (%) -->
                     <div class="summary-card p-6 rounded-xl" id="card-maintenance">
                         <div class="flex justify-between items-start mb-4">
                             <div>
                                 <h4 class="text-gray-400 text-sm font-bold">Maintenance Pabrik</h4>
-                                <p class="text-xs text-gray-500">Progress Fisik</p>
+                                <p class="text-xs text-gray-500">Progress Fisik (%)</p>
                             </div>
                             <i class="fas fa-wrench text-3xl text-blue-400 opacity-50"></i>
                         </div>
@@ -113,18 +112,18 @@
                                 <span class="text-lg font-bold text-blue-400" id="sum-maint-real">-</span>
                             </div>
                             <div class="flex justify-between items-end border-t border-gray-700 pt-2 mt-2">
-                                <span class="text-xs text-gray-400 font-semibold">DEVIASI:</span>
+                                <span class="text-xs text-gray-400 font-semibold">DEVISAI:</span>
                                 <span class="text-xl font-bold" id="sum-maint-deviasi">-</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Card 2: PR Investasi -->
+                    <!-- Card 2: PR Investasi (Paket/Buah) -->
                     <div class="summary-card p-6 rounded-xl" id="card-investasi">
                         <div class="flex justify-between items-start mb-4">
                             <div>
                                 <h4 class="text-gray-400 text-sm font-bold">PR Investasi Pabrik</h4>
-                                <p class="text-xs text-gray-500">Jumlah PR</p>
+                                <p class="text-xs text-gray-500">Capex / Opex</p>
                             </div>
                             <i class="fas fa-chart-line text-3xl text-green-400 opacity-50"></i>
                         </div>
@@ -144,12 +143,12 @@
                         </div>
                     </div>
 
-                    <!-- Card 3: Eksploitasi -->
+                    <!-- Card 3: Eksploitasi (Paket/Buah) -->
                     <div class="summary-card p-6 rounded-xl" id="card-eksploitasi">
                         <div class="flex justify-between items-start mb-4">
                             <div>
                                 <h4 class="text-gray-400 text-sm font-bold">Eksploitasi</h4>
-                                <p class="text-xs text-gray-500">Jumlah PR</p>
+                                <p class="text-xs text-gray-500">Operasional Lain</p>
                             </div>
                             <i class="fas fa-hard-hat text-3xl text-yellow-400 opacity-50"></i>
                         </div>
@@ -182,10 +181,9 @@
                 </div>
             </section>
 
-            <!-- OPERASIONAL (Previous Operational Cards) -->
+            <!-- OPERASIONAL -->
             <section id="operasional" class="page-section">
                 <h3 class="font-bold text-lg mb-4 text-blue-400"><i class="fas fa-industry mr-2"></i>Data Operasional Pabrik</h3>
-                 <!-- Grid Kartu Angka (Tebu, Gula, dll) -->
                  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
                     <div class="ops-card p-4 rounded-xl" id="card-tebu">
                         <h4 class="text-gray-400 text-xs">Tebu Giling</h4>
@@ -235,10 +233,8 @@
                 </div>
             </section>
 
-            <!-- PERSIAPAN PABRIK (NEW LAYOUT WITH MILESTONES) -->
+            <!-- PERSIAPAN PABRIK -->
             <section id="persiapan" class="page-section">
-                
-                <!-- Milestone Cards (Dates) -->
                 <h3 class="font-bold text-lg mb-4 text-white"><i class="fas fa-calendar-alt mr-2"></i>Milestone Persiapan Giling</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     <div class="milestone-card p-4 rounded-lg" id="card-overhaul">
@@ -267,13 +263,11 @@
                     </div>
                 </div>
 
-                <!-- AI Persiapan -->
                 <div class="glass-dark p-6 rounded-xl border-t-4 border-yellow-500 mb-6">
                     <div class="flex items-center gap-2 mb-2"><i class="fas fa-robot text-yellow-400"></i><h3 class="font-bold text-white">Analisis Timeline Persiapan</h3></div>
                     <div id="aiPersiapanContent" class="text-sm text-gray-300">Analisis tanggal...</div>
                 </div>
 
-                <!-- Grafik -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                     <div class="glass-dark p-6 rounded-xl border-t-4 border-neon-green">
                         <h3 class="font-bold text-lg mb-4 text-green-400"><i class="fas fa-wrench mr-2"></i>Grafik Maintenance</h3>
@@ -312,26 +306,24 @@
                     <button onclick="loadSheetData()" class="bg-sugar-accent hover:bg-pink-600 px-6 py-2 rounded-lg font-semibold transition">Simpan & Ambil Data</button>
                     
                     <div class="mt-6 text-xs text-gray-500 bg-sugar-dark p-4 rounded border border-gray-800">
-                        <p class="font-bold text-gray-300 mb-2">Panduan Format Sheet (Update Sesuai Kebutuhan Baru):</p>
+                        <p class="font-bold text-gray-300 mb-2">Panduan Format Sheet (Update):</p>
                         <p>Header: <span class="text-yellow-400">Kategori, Nama Item, Target, Realisasi, Satuan</span></p>
                         
                         <div class="mt-3">
                             <p class="font-semibold text-white">1. Dashboard Utama (Summary):</p>
                             <p>Isi Kategori: <span class="text-yellow-400">Summary</span></p>
-                            <p>Nama Item: "Maintenance Pabrik", "PR Investasi Pabrik", "Eksploitasi"</p>
-                            <p>Isi Target/Realisasi dengan Angka (persen atau nominal).</p>
+                            <ul class="list-disc list-inside ml-2 text-gray-400 mt-1">
+                                <li><strong>Maintenance Pabrik</strong>: Target/Realisasi isi angka persen (contoh: 100). Satuan: %.</li>
+                                <li><strong>PR Investasi Pabrik</strong>: Target/Realisasi isi angka (contoh: 50). Satuan: Paket.</li>
+                                <li><strong>Eksploitasi</strong>: Target/Realisasi isi angka (contoh: 12). Satuan: Paket.</li>
+                            </ul>
                         </div>
 
                         <div class="mt-3">
                             <p class="font-semibold text-white">2. Persiapan Pabrik (Milestone):</p>
                             <p>Isi Kategori: <span class="text-yellow-400">Milestone</span></p>
                             <p>Nama Item: "Start Overhaul", "Slow Firing", "Steam Test", "Start Giling"</p>
-                            <p>Isi Target/Realisasi dengan TANGGAL (Format: YYYY-MM-DD, contoh: 2024-05-20).</p>
-                        </div>
-
-                         <div class="mt-3">
-                            <p class="font-semibold text-white">3. Data Operasional:</p>
-                            <p>Nama Item: Tebu Giling, Jamti A/B, dll.</p>
+                            <p>Isi Target/Realisasi dengan TANGGAL (Format: YYYY-MM-DD).</p>
                         </div>
                     </div>
                 </div>
@@ -349,16 +341,16 @@
         let rawData = [];
         let charts = { ops: null, main: null, proc: null, keu: null };
 
-        // DUMMY DATA SESUAI FORMAT BARU
+        // DUMMY DATA (Sesuai format baru: Investasi & Eksploitasi dalam Paket)
         const DUMMY_DATA = [
             // Summary for Home
             { Kategori: 'Summary', 'Nama Item': 'Maintenance Pabrik', Target: 100, Realisasi: 85.25, Satuan: '%' },
-            { Kategori: 'Summary', 'Nama Item': 'PR Investasi Pabrik', Target: 5000000000, Realisasi: 4500000000, Satuan: 'Rp' },
-            { Kategori: 'Summary', 'Nama Item': 'Eksploitasi', Target: 100, Realisasi: 92.50, Satuan: '%' },
+            { Kategori: 'Summary', 'Nama Item': 'PR Investasi Pabrik', Target: 50, Realisasi: 42, Satuan: 'Paket' },
+            { Kategori: 'Summary', 'Nama Item': 'Eksploitasi', Target: 12, Realisasi: 10, Satuan: 'Paket' },
             
             // Milestones for Persiapan
             { Kategori: 'Milestone', 'Nama Item': 'Start Overhaul', Target: '2024-04-01', Realisasi: '2024-04-02', Satuan: 'Tanggal' },
-            { Kategori: 'Milestone', 'Nama Item': 'Slow Firing', Target: '2024-05-10', Realisasi: '', Satuan: 'Tanggal' }, // Simulasi belum selesai
+            { Kategori: 'Milestone', 'Nama Item': 'Slow Firing', Target: '2024-05-10', Realisasi: '', Satuan: 'Tanggal' },
             { Kategori: 'Milestone', 'Nama Item': 'Steam Test', Target: '2024-05-20', Realisasi: '', Satuan: 'Tanggal' },
             { Kategori: 'Milestone', 'Nama Item': 'Start Giling', Target: '2024-06-01', Realisasi: '', Satuan: 'Tanggal' },
 
@@ -402,7 +394,6 @@
         }
         function parseDate(val) {
             if (!val) return null;
-            // Expect format YYYY-MM-DD
             const date = new Date(val);
             return isNaN(date.getTime()) ? null : date;
         }
@@ -463,7 +454,6 @@
         // PROSES UTAMA
         // ==========================================
         function processData() {
-            // Filter Data Per Kategori
             const summary = rawData.filter(d => clean(getKategori(d)) === 'summary');
             const milestones = rawData.filter(d => clean(getKategori(d)) === 'milestone');
             const ops = rawData.filter(d => clean(getKategori(d)) === 'operasional');
@@ -486,10 +476,10 @@
         }
 
         // ==========================================
-        // RENDER HOME SUMMARY (NEW)
+        // RENDER HOME SUMMARY (UPDATED LOGIC)
         // ==========================================
         function renderHomeSummary(data) {
-            // 1. Maintenance Pabrik
+            // 1. Maintenance Pabrik (%)
             const maint = data.find(d => clean(getNama(d)).includes('maintenance'));
             if(maint) {
                 const t = parseNum(getTarget(maint));
@@ -500,32 +490,35 @@
                 const elDev = document.getElementById('sum-maint-deviasi');
                 elDev.innerText = (deviasi >= 0 ? "+" : "") + deviasi.toFixed(2) + "%";
                 elDev.className = `text-xl font-bold ${deviasi < 0 ? 'text-red-400' : 'text-green-400'}`;
-                
                 if(deviasi < 0) document.getElementById('card-maintenance').classList.add('warning');
                 else document.getElementById('card-maintenance').classList.remove('warning');
             }
 
-            // 2. PR Investasi
+            // 2. PR Investasi (Paket/Buah)
             const inv = data.find(d => clean(getNama(d)).includes('investasi'));
             if(inv) {
                 const t = parseNum(getTarget(inv));
                 const r = parseNum(getRealisasi(inv));
+                const sat = getSatuan(inv) || "Paket"; // Ambil satuan atau default 'Paket'
                 const pct = t > 0 ? (r/t)*100 : 0;
-                document.getElementById('sum-inv-target').innerText = "Rp " + (t/1000000000).toFixed(1) + " Mia";
-                document.getElementById('sum-inv-real').innerText = "Rp " + (r/1000000000).toFixed(1) + " Mia";
+                
+                document.getElementById('sum-inv-target').innerText = t.toLocaleString('id-ID') + " " + sat;
+                document.getElementById('sum-inv-real').innerText = r.toLocaleString('id-ID') + " " + sat;
                 const elPct = document.getElementById('sum-inv-pct');
                 elPct.innerText = pct.toFixed(2) + "%";
                 elPct.className = `text-xl font-bold ${r < t ? 'text-red-400' : 'text-green-400'}`;
             }
 
-            // 3. Eksploitasi
+            // 3. Eksploitasi (Paket/Buah)
             const eks = data.find(d => clean(getNama(d)).includes('eksploitasi'));
             if(eks) {
                 const t = parseNum(getTarget(eks));
                 const r = parseNum(getRealisasi(eks));
+                const sat = getSatuan(eks) || "Paket"; // Ambil satuan atau default 'Paket'
                 const pct = t > 0 ? (r/t)*100 : 0;
-                document.getElementById('sum-eks-target').innerText = t + "%";
-                document.getElementById('sum-eks-real').innerText = r.toFixed(2) + "%";
+                
+                document.getElementById('sum-eks-target').innerText = t.toLocaleString('id-ID') + " " + sat;
+                document.getElementById('sum-eks-real').innerText = r.toLocaleString('id-ID') + " " + sat;
                 const elPct = document.getElementById('sum-eks-pct');
                 elPct.innerText = pct.toFixed(2) + "%";
                 elPct.className = `text-xl font-bold ${r < t ? 'text-red-400' : 'text-green-400'}`;
@@ -533,7 +526,7 @@
         }
 
         // ==========================================
-        // RENDER MILESTONES (NEW)
+        // RENDER MILESTONES
         // ==========================================
         function renderMilestones(data) {
             const today = new Date();
@@ -562,13 +555,12 @@
                     const card = document.getElementById(`card-${item.key}`);
                     const statusEl = document.getElementById(`status-${item.key}`);
                     
-                    // Logika AI
                     if (!rDate && tDate) {
                         if (today > tDate) {
                             card.classList.add('late');
                             statusEl.innerHTML = `<span class="text-red-400 font-bold">TERLAMBAT!</span>`;
                             aiHtml += `<div class='text-red-400 bg-sugar-dark p-2 rounded mb-2'>
-                                <i class="fas fa-exclamation-circle mr-1"></i> <strong>${item.name}</strong> melewati batas target (${formatDateDisplay(tStr)}). Segera evaluasi kemajuan pekerjaan.
+                                <i class="fas fa-exclamation-circle mr-1"></i> <strong>${item.name}</strong> melewati batas target (${formatDateDisplay(tStr)}).
                             </div>`;
                         } else {
                             card.classList.remove('late');
@@ -578,11 +570,8 @@
                          card.classList.remove('late');
                          if (rDate > tDate) {
                              statusEl.innerHTML = `<span class="text-yellow-400">Selesai (Terlambat)</span>`;
-                             aiHtml += `<div class='text-yellow-400 bg-sugar-dark p-2 rounded mb-2'>
-                                <i class="fas fa-clock mr-1"></i> <strong>${item.name}</strong> selesai terlambat dari target.
-                            </div>`;
                          } else {
-                             statusEl.innerHTML = `<span class="text-green-400">Selesai Tepat Waktu</span>`;
+                             statusEl.innerHTML = `<span class="text-green-400">Tepat Waktu</span>`;
                          }
                     }
                 }
@@ -591,7 +580,7 @@
         }
 
         // ==========================================
-        // RENDER OPERASIONAL (Same as before)
+        // RENDER OPERASIONAL
         // ==========================================
         function renderOperasionalCards(data) {
             const items = [
@@ -715,21 +704,17 @@
             const container = document.getElementById('aiHomeContent');
             let issues = [];
             
-            // Check Summary Data
             const summary = rawData.filter(d => clean(getKategori(d)) === 'summary');
             summary.forEach(item => {
                 const t = parseNum(getTarget(item));
                 const r = parseNum(getRealisasi(item));
                 const nama = getNama(item);
-                
-                // Logic: If Realisasi < Target (Assuming simple logic, investment might differ but let's keep it simple for AI summary)
+                // Logic sederhana: jika realisasi < target -> warning
                 if (r < t) {
-                    const gap = t - r;
-                    issues.push(`<span class='text-yellow-400'>${nama}</span> (Gap: ${gap.toFixed(2)})`);
+                    issues.push(`<span class='text-yellow-400'>${nama}</span> (Tidak tercapai)`);
                 }
             });
 
-            // Check Milestones Dates
             const milestones = rawData.filter(d => clean(getKategori(d)) === 'milestone');
             const today = new Date();
             milestones.forEach(item => {
@@ -741,7 +726,7 @@
             });
 
             if (issues.length === 0) {
-                container.innerHTML = `<div class="p-4 bg-green-900/50 rounded text-green-300"><i class="fas fa-check-circle mr-2"></i>Status Proyek: OPTIMAL. Semama realisasi sesuai atau melebihi target.</div>`;
+                container.innerHTML = `<div class="p-4 bg-green-900/50 rounded text-green-300"><i class="fas fa-check-circle mr-2"></i>Status Proyek: OPTIMAL.</div>`;
             } else {
                 container.innerHTML = `<div class="p-4 bg-red-900/50 rounded text-red-300 mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>Peringatan Proyek!</div>
                 <div class="text-xs text-gray-300 space-y-1">
