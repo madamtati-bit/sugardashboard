@@ -62,7 +62,7 @@
         <nav class="flex-1 p-4 space-y-2" id="mainNav">
             <button onclick="navigateTo('home')" class="nav-item active w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-home"></i> Dashboard Utama</button>
             <button onclick="navigateTo('operasional')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-cogs"></i> Kinerja Operasional</button>
-            <button onclick="navigateTo('persiapan Pabrik')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-tools"></i> Persiapan Pabrik</button>
+            <button onclick="navigateTo('persiapan')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-tools"></i> Persiapan Pabrik</button>
             <button onclick="navigateTo('keuangan')" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-wallet"></i> Kinerja Keuangan</button>
             <button onclick="checkPassword()" class="nav-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition hover:bg-sugar-blue"><i class="fas fa-sliders-h"></i> Pengaturan</button>
         </nav>
@@ -256,7 +256,7 @@
             document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            const navMap = { 'home': 0, 'operasional': 1, 'persiapan Pabrik': 2, 'keuangan': 3, 'pengaturan': 4 };
+            const navMap = { 'home': 0, 'operasional': 1, 'persiapan': 2, 'keuangan': 3, 'pengaturan': 4 };
             if (navMap[pageId] !== undefined) document.querySelectorAll('.nav-item')[navMap[pageId]].classList.add('active');
         }
 
