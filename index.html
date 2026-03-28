@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUGARDASH - Project Monitoring</title>
+    <title>SUGARDASH - Pabrik Gula Sei Semayang</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -62,7 +62,7 @@
                 <div class="bg-sugar-accent p-2 rounded-lg"><i class="fas fa-chart-pie text-white text-xl"></i></div>
                 <div>
                     <h1 class="text-xl font-bold text-white">SUGARDASH</h1>
-                    <p class="text-xs text-gray-400">Project Monitoring</p>
+                    <p class="text-xs text-gray-400">Pabrik Gula Sei Semayang</p>
                 </div>
             </div>
         </div>
@@ -143,7 +143,7 @@
                         </div>
                     </div>
 
-                    <!-- Card 3: Eksploitasi (Paket/Buah) -->
+                    <!-- Card 3: PR Eksploitasi (Paket/Buah) -->
                     <div class="summary-card p-6 rounded-xl" id="card-eksploitasi">
                         <div class="flex justify-between items-start mb-4">
                             <div>
@@ -191,7 +191,7 @@
                         <div class="flex justify-between text-xs text-gray-500"><span>Target: <span id="tgt-tebu" class="text-white">-</span></span><span id="pct-tebu" class="font-bold">-</span></div>
                     </div>
                     <div class="ops-card p-4 rounded-xl" id="card-gula">
-                        <h4 class="text-gray-400 text-xs">Hasil Gula</h4>
+                        <h4 class="text-gray-400 text-xs">Produksi Gula</h4>
                         <h2 class="text-2xl font-bold text-green-400 my-2" id="val-gula">-</h2>
                         <div class="flex justify-between text-xs text-gray-500"><span>Target: <span id="tgt-gula" class="text-white">-</span></span><span id="pct-gula" class="font-bold">-</span></div>
                     </div>
@@ -207,17 +207,17 @@
                     </div>
                     
                     <div class="ops-card p-4 rounded-xl" id="card-kis">
-                        <h4 class="text-gray-400 text-xs">KIS/KES</h4>
+                        <h4 class="text-gray-400 text-xs">KIS</h4>
                         <h2 class="text-2xl font-bold text-cyan-400 my-2" id="val-kis">-</h2>
                         <div class="flex justify-between text-xs text-gray-500"><span>Target: <span id="tgt-kis" class="text-white">-</span></span><span id="pct-kis" class="font-bold">-</span></div>
                     </div>
                     <div class="ops-card p-4 rounded-xl" id="card-jamti">
-                        <h4 class="text-gray-400 text-xs">Jamti A/B <span class="text-red-300 text-[10px]">(Max)</span></h4>
+                        <h4 class="text-gray-400 text-xs">Jamti <span class="text-red-300 text-[10px]">(Max)</span></h4>
                         <h2 class="text-2xl font-bold text-red-400 my-2" id="val-jamti">-</h2>
                         <div class="flex justify-between text-xs text-gray-500"><span>Batas: <span id="tgt-jamti" class="text-white">-</span></span><span id="pct-jamti" class="font-bold">-</span></div>
                     </div>
                     <div class="ops-card p-4 rounded-xl" id="card-or">
-                        <h4 class="text-gray-400 text-xs">OR (Olah Rate)</h4>
+                        <h4 class="text-gray-400 text-xs">OR (Ovreral Recovery)</h4>
                         <h2 class="text-2xl font-bold text-orange-400 my-2" id="val-or">-</h2>
                         <div class="flex justify-between text-xs text-gray-500"><span>Target: <span id="tgt-or" class="text-white">-</span></span><span id="pct-or" class="font-bold">-</span></div>
                     </div>
@@ -315,7 +315,7 @@
                             <ul class="list-disc list-inside ml-2 text-gray-400 mt-1">
                                 <li><strong>Maintenance Pabrik</strong>: Target/Realisasi isi angka persen (contoh: 100). Satuan: %.</li>
                                 <li><strong>PR Investasi Pabrik</strong>: Target/Realisasi isi angka (contoh: 50). Satuan: Paket.</li>
-                                <li><strong>Eksploitasi</strong>: Target/Realisasi isi angka (contoh: 12). Satuan: Paket.</li>
+                                <li><strong>PR Eksploitasi</strong>: Target/Realisasi isi angka (contoh: 12). Satuan: Paket.</li>
                             </ul>
                         </div>
 
@@ -346,7 +346,7 @@
             // Summary for Home
             { Kategori: 'Summary', 'Nama Item': 'Maintenance Pabrik', Target: 100, Realisasi: 85.25, Satuan: '%' },
             { Kategori: 'Summary', 'Nama Item': 'PR Investasi Pabrik', Target: 50, Realisasi: 42, Satuan: 'Paket' },
-            { Kategori: 'Summary', 'Nama Item': 'Eksploitasi', Target: 12, Realisasi: 10, Satuan: 'Paket' },
+            { Kategori: 'Summary', 'Nama Item': 'PR Eksploitasi', Target: 12, Realisasi: 10, Satuan: 'Paket' },
             
             // Milestones for Persiapan
             { Kategori: 'Milestone', 'Nama Item': 'Start Overhaul', Target: '2024-04-01', Realisasi: '2024-04-02', Satuan: 'Tanggal' },
@@ -356,7 +356,7 @@
 
             // Data Operasional
             { Kategori: 'Operasional', 'Nama Item': 'Tebu Giling', Target: 15000, Realisasi: 12000, Satuan: 'Ton' },
-            { Kategori: 'Operasional', 'Nama Item': 'Jamti A/B', Target: 5.0, Realisasi: 4.5, Satuan: '%' },
+            { Kategori: 'Operasional', 'Nama Item': 'Jamti ', Target: 5.0, Realisasi: 4.5, Satuan: '%' },
             
             // Maintenance Detail
             { Kategori: 'Maintenance', 'Nama Item': 'Overhaul Mesin', Target: 100, Realisasi: 85.25, Satuan: '%' },
@@ -509,7 +509,7 @@
                 elPct.className = `text-xl font-bold ${r < t ? 'text-red-400' : 'text-green-400'}`;
             }
 
-            // 3. Eksploitasi (Paket/Buah)
+            // 3. PR Eksploitasi (Paket/Buah)
             const eks = data.find(d => clean(getNama(d)).includes('eksploitasi'));
             if(eks) {
                 const t = parseNum(getTarget(eks));
@@ -585,11 +585,11 @@
         function renderOperasionalCards(data) {
             const items = [
                 { key: 'tebu', name: 'Tebu Giling', color: 'blue' },
-                { key: 'gula', name: 'Hasil Gula', color: 'green' },
+                { key: 'gula', name: 'Produksi Gula', color: 'green' },
                 { key: 'rendemen', name: 'Rendemen', color: 'yellow' },
                 { key: 'tetes', name: 'Produksi Tetes', color: 'purple' },
                 { key: 'kis', name: 'KIS/KES', color: 'cyan' },
-                { key: 'jamti', name: 'Jamti A/B', color: 'red', logic: 'max' }, 
+                { key: 'jamti', name: 'Jamti ', color: 'red', logic: 'max' }, 
                 { key: 'or', name: 'OR', color: 'orange' },
                 { key: 'losses', name: 'Total Losses', color: 'gray' }
             ];
